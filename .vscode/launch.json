@@ -14,10 +14,10 @@
         // },
         {
             "name": "nvcc",
-            "type": "cppvsdbg",
+            "type": "cppvsdbg", 
             "request": "launch",
             "program": "./nvcc.o",
-            "args": [],
+            "args": ["--v1", "--opt-csr-a", "-a", "../resources/cage3.mtx", "-b", "../resources/cage3.mtx", "-t", "8"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/src",
             "environment": [],
