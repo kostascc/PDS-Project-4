@@ -1,27 +1,29 @@
 #include "v1.hpp"
 
-// bool ttest(Matrix* mx, int b, int c){
-//     addcsci(mx, b, c);
-//     // Sleep(1);
-//     if((b+c)%2==0)
-//         return true;
-//         return false;
-// }
 
 void v1_execute(Runtime rt){
 
     // Matrix required to be CSR
     if(!rt.opt_csr_a){
         printf("[Error] Flag '--opt-csr-a' is required for V1.\n");
-        // exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
-    FILE *f = fopen("debug.txt", "wb");
-    if (f == NULL)
-    {
-        printf("Error opening file!\n");
-        exit(1);
-    }
+
+    // // debug input Matrix
+    // FILE *f = fopen("debug.txt", "wb");
+    // if (f == NULL)
+    // {
+    //     printf("[Error] Couldn't open file!\n");
+    //     exit(EXIT_FAILURE);
+    // }
+    // for(int i=0; i<rt.B->W; i++){
+    //     for(int j=rt.B->cscp[i]; j<rt.B->cscp[i+1]; j++){
+    //         fprintf(f, "%d,%d\n", rt.B->csci[j]+1, i+1);
+    //     }
+    // }
+    // fclose(f);
+
 
     // Start Clock
     utils::Clock clock = utils::Clock();
@@ -48,7 +50,6 @@ void v1_execute(Runtime rt){
             // Foreach Non-Zero on i-th row of Matrix A
             for(int k=rt.A->cscp[i]; k<rt.A->cscp[i+1]; k++){
                 
-                // Sleep(400);
                 if(binarySearch(rt.B->csci, rt.B->cscp[j], rt.B->cscp[j+1]-1, rt.A->csci[k])){
                     
                     #pragma omp critical
@@ -66,13 +67,17 @@ void v1_execute(Runtime rt){
 
     }
 
-    fclose(f);
+    printf("[Info] V1 Took %s\n", clock.stopClock());
 
     std::sort(coo.begin(), coo.end(), [](auto &left, auto &right) {
-        return left.second < right.second;
+        if(left.second == right.second)
+            return left.first < right.first;
+            return left.second < right.second;
     });
 
-    printf("NZ: %d, n: %d\n", NZ, coo.size());
+    exportCOOVectorP(&coo, rt, "v1");
+
+    printf("NZ: %d\n", NZ);
 
 }
 

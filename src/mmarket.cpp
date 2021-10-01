@@ -174,7 +174,7 @@ void mmarket_import(char* filename, Matrix* mx, bool transpose, bool three_colum
     fflush(stdout);
 
     if(__show_info)
-        printf("[Info] Took %fs\n", clock.stopClock());
+        printf("[Info] MMARKET Import Took %s\n", clock.stopClock());
 
 }
 

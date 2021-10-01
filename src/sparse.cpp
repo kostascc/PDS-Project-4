@@ -49,24 +49,24 @@ void quicksort(int* arr,int first,int last){
 }
 
 
-void addcsci(Matrix* mx, int idx, int ptr){
+// void addcsci(Matrix* mx, int idx, int ptr){
 
-    if (mx->csci[mx->cscp[ptr+1]]!=0) {
-        printf("[Error] addcsci: Tried adding row to a non-zero index. [%d]\n", mx->csci[mx->cscp[ptr+1]]);
-        exit(EXIT_FAILURE);
-    } else if (ptr > mx->W) {
-        printf("[Error] addcsci: Pointer out of bounds.\n");
-        exit(EXIT_FAILURE);
-    } else if ( ptr > (mx->W) *2 ) {
-        printf("[Error] addcsci: Pointer out Non-Zero of bounds.\n");
-        exit(EXIT_FAILURE);
-    } else {
-        mx->csci[mx->cscp[ptr+1]] = idx;
-        mx->NZ ++;
-    }
+//     if (mx->csci[mx->cscp[ptr+1]]!=0) {
+//         printf("[Error] addcsci: Tried adding row to a non-zero index. [%d]\n", mx->csci[mx->cscp[ptr+1]]);
+//         exit(EXIT_FAILURE);
+//     } else if (ptr > mx->W) {
+//         printf("[Error] addcsci: Pointer out of bounds.\n");
+//         exit(EXIT_FAILURE);
+//     } else if ( ptr > (mx->W) *2 ) {
+//         printf("[Error] addcsci: Pointer out Non-Zero of bounds.\n");
+//         exit(EXIT_FAILURE);
+//     } else {
+//         mx->csci[mx->cscp[ptr+1]] = idx;
+//         mx->NZ ++;
+//     }
 
-    for(int i=ptr; i<mx->W; i++){
-        mx->cscp[i]++;
-    }
+//     for(int i=ptr; i<mx->W; i++){
+//         mx->cscp[i]++;
+//     }
 
-}
+// }

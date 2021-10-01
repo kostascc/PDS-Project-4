@@ -8,7 +8,10 @@
 #ifndef RUNTIME_HPP_
 #define RUNTIME_HPP_
 
+#define URI_STRING_SIZE 1024
+
 #include "Matrix.hpp"
+#include "string.h"
 
 class Runtime {
   public:    
@@ -16,6 +19,8 @@ class Runtime {
     Matrix* B;       // 
     bool v1;         // Run V1
     bool opt_csr_a;  // Optimization: Use CSR for Matrix A
+    char URIa[URI_STRING_SIZE];
+    char URIb[URI_STRING_SIZE];
 
   Runtime(){
     v1 = false;

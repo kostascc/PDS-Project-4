@@ -20,6 +20,9 @@
 #include "omp.h"
 #include "mmarket.hpp"
 #include "Runtime.hpp"
+#include <string>
+#include <vector>
+#include <sstream>
 
 
 
@@ -108,5 +111,11 @@ extern int tmp_node_id;
 
 
 int n_per_node(int node_id, int cluster_size, int n);
+
+
+/**
+ * Export Vector Pair of COO
+ **/
+void exportCOOVectorP(vector<pair<int,int>>* v, Runtime rt, string title);
 
 #endif

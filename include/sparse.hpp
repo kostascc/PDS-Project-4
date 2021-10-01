@@ -13,7 +13,11 @@ void sparseSortMtx(Matrix* mx);
 // Quicksort of an array between two indiices
 void quicksort(int* arr, int first, int last);
 
+//void CSCtoBlock(Matrix* M, int** b, Runtime runtime);
+
+
+
 // Adds a row to the specified column
-void addcsci(Matrix* mx, int idx, int ptr);
+// void addcsci(Matrix* mx, int idx, int ptr);
 
 #endif
