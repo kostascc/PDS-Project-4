@@ -223,7 +223,7 @@ void aux_merge( double ** _I, int ** _J,
 Runtime startup(int argc, char** argv)
 {
 
-    if(argc < 3){
+    if(argc < 4){
         printf("[Error] Not enough arguments!\n");
         printf("Available Arguments:\n");
         printf(" -t <int>           Threads\n");
@@ -233,8 +233,12 @@ Runtime startup(int argc, char** argv)
         printf(" -b <uri>           Matrix B file\n");
         printf(" --b-transpose      Transpose Matrix B\n");
         printf(" --b-twocolumncoo   MM file of Matrix B doesn't contain values\n");
-        printf(" --opt-csr-a        Optimization: Uses CSR storage for Matrix A.\n");
-        printf(" --v1               Execute algorithm V1.\n");
+        printf(" -f <uri>           Matrix F file\n");
+        printf(" --f-transpose      Transpose Matrix F\n");
+        printf(" --f-twocolumncoo   MM file of Matrix F doesn't contain values\n");
+        printf(" --opt-csr-a        Optimization: Uses CSR storage for Matrix A\n");
+        printf(" --v1               Sequential algorithm (V1)\n");
+        printf(" --v2               Parallelized algorithm (V2)\n");
         exit(EXIT_FAILURE);
     }
 
@@ -248,6 +252,11 @@ Runtime startup(int argc, char** argv)
     bool _b_three_column_coo = true;
     bool _b_transpose = false;
     bool b_ready;
+
+    char _f_filename[1024];
+    bool _f_three_column_coo = true;
+    bool _f_transpose = false;
+    bool f_ready;
 
     // int _n = 1000;
     // int _m = 100;
@@ -334,6 +343,19 @@ Runtime startup(int argc, char** argv)
         }
 
         /**
+         * " -f < Path > "
+         */
+        if(strcmp(argv[i],"-f")==0)
+        {
+            if(i<argc-1)
+            {
+                strcpy(_f_filename, argv[i+1]);
+                f_ready = true;
+                continue;
+            }
+        }
+
+        /**
          * " --a-transpose"
          */
         if(strcmp(argv[i],"--a-transpose")==0)
@@ -347,6 +369,14 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--b-transpose")==0)
         {
             _b_transpose = true;
+        }
+
+        /**
+         * " --f-transpose"
+         */
+        if(strcmp(argv[i],"--f-transpose")==0)
+        {
+            _f_transpose = true;
         }
 
         /**
@@ -366,6 +396,14 @@ Runtime startup(int argc, char** argv)
         }
 
         /**
+         * " --f-twocolumncoo"
+         */
+        if(strcmp(argv[i],"--f-twocolumncoo")==0)
+        {
+            _f_three_column_coo = false;
+        }
+
+        /**
          * " --opt-csr-a"
          */
         if(strcmp(argv[i],"--opt-csr-a")==0)
@@ -381,6 +419,14 @@ Runtime startup(int argc, char** argv)
             rt.v1 = true;
         }
 
+        /**
+         * " --v2"
+         */
+        if(strcmp(argv[i],"--v2")==0)
+        {
+            rt.v2 = true;
+        }
+
     }
 
     if (!a_ready){
@@ -393,8 +439,14 @@ Runtime startup(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
 
+    if (!f_ready){
+        printf("[Error] Matrix F wasn't specified!\n Exiting...\n");
+        exit(EXIT_FAILURE);
+    }
+
     strcpy(rt.URIa, _a_filename);
     strcpy(rt.URIb, _b_filename);
+    strcpy(rt.URIf, _f_filename);
 
     // Convert Matrix A to CSR for Optimization
     if(rt.opt_csr_a)
@@ -412,12 +464,15 @@ Runtime startup(int argc, char** argv)
      ** Import Matrices **
     **********************/
 
-    rt.A = new Matrix();
-    rt.B = new Matrix();
+    rt.A = new CSCMatrix();
+    rt.B = new CSCMatrix();
+    rt.F = new CSCMatrix();
 
     mmarket_import(_a_filename, rt.A, _a_transpose, _a_three_column_coo); // Import MM
     
     mmarket_import(_b_filename, rt.B, _b_transpose, _b_three_column_coo); // Import MM
+
+    mmarket_import(_f_filename, rt.F, _f_transpose, _f_three_column_coo); // Import MM
     
     return  rt;
 
