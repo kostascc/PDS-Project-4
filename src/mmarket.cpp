@@ -8,7 +8,7 @@
 #include "mmarket.hpp"
 
 
-void mmarket_import(char* filename, Matrix* mx, bool transpose, bool three_column_coo){
+void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_column_coo){
 
     bool __show_info = true; // Show Progress
 

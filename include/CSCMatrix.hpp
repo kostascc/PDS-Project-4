@@ -5,10 +5,10 @@
  * kachatzis <at> ece.auth.gr
  */
 
-#ifndef MATRIX_HPP_
-#define MATRIX_HPP_
+#ifndef CSCMATRIX_HPP_
+#define CSCMATRIX_HPP_
 
-class Matrix {
+class CSCMatrix {
   public:    
     int* csci;  // Row Indices
     int* cscp;  // Column Pointers

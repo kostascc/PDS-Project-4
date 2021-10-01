@@ -18,6 +18,7 @@
 #include "mmarket.hpp"
 #include "mmio.h"
 #include "v1.hpp"
+#include "BlockPermutations.hpp"
 
 
 using namespace std;

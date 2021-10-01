@@ -16,7 +16,7 @@
 #include <stdbool.h>
 #include <iostream>
 #include "utils.hpp"
-#include "Matrix.hpp"
+#include "CSCMatrix.hpp"
 #include "msort.hpp"
 #include "Runtime.hpp"
 #include "sparse.hpp"
@@ -25,7 +25,7 @@
 /**
  * Import Matrix-Market file
  **/
-void mmarket_import(char* filename, Matrix* mx, bool transpose, bool three_column_coo);
+void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_column_coo);
 
 
 #endif  // mmarket_h__

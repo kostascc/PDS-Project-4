@@ -1,14 +1,14 @@
 #ifndef SPARSE_HPP__
 #define SPARSE_HPP__
 
-#include "matrix.hpp"
+#include "CSCMatrix.hpp"
 #include "auxlib.hpp"
 
 // Convert between CSC and CSR formats.
-void CSCtoCSR(Matrix* A, Matrix* B);
+void CSCtoCSR(CSCMatrix* A, CSCMatrix* B);
 
 // Sort Sparse Matrix (CSC/CSR) indices.
-void sparseSortMtx(Matrix* mx);
+void sparseSortMtx(CSCMatrix* mx);
 
 // Quicksort of an array between two indiices
 void quicksort(int* arr, int first, int last);

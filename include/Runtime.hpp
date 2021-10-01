@@ -10,17 +10,20 @@
 
 #define URI_STRING_SIZE 1024
 
-#include "Matrix.hpp"
+#include "CSCMatrix.hpp"
 #include "string.h"
 
 class Runtime {
   public:    
-    Matrix* A;       // 
-    Matrix* B;       // 
-    bool v1;         // Run V1
-    bool opt_csr_a;  // Optimization: Use CSR for Matrix A
+    CSCMatrix* A;   // First Input Matrix (CSC Format)
+    CSCMatrix* B;   // Second Input Matrix (CSC Format)
+    CSCMatrix* F;   // Input Filter Matrix (CSC Format)
+    bool v1;        // Run V1
+    bool v2;        // Run V1
+    bool opt_csr_a; // Optimization: Use CSR for Matrix A
     char URIa[URI_STRING_SIZE];
     char URIb[URI_STRING_SIZE];
+    char URIf[URI_STRING_SIZE];
 
   Runtime(){
     v1 = false;
