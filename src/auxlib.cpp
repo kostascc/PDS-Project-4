@@ -20,6 +20,54 @@
 extern bool _TIMER_PRINT = true ;
 
 
+void exportCOOVectorP(vector<pair<int,int>>* v, Runtime rt, string title){
+
+    /**
+     * Create File Name
+     **/
+    char *name1, *name2, *name1_, *name2_;
+    char * token;
+    token = strtok(strdup(rt.URIa), "/");
+    while (token != NULL)
+    {
+        name1 = token;
+        token = strtok(NULL, "/");
+    }
+    token = strtok(name1, ".");
+    while (token != NULL)
+    {
+        name1_ = token;
+        break;
+    }
+    token = strtok(strdup(rt.URIb), "/");
+    while (token != NULL)
+    {
+        name2 = token;
+        token = strtok(NULL, "/");
+    }
+    token = strtok(name2, ".");
+    while (token != NULL)
+    {
+        name2_ = token;
+        break;
+    }
+    stringstream ss;
+    ss <<  name1_ << "_" << name2_ << "_" << title << ".txt";
+
+    FILE *f = fopen(ss.str().c_str(), "wb");
+    if (f == NULL)
+    {
+        printf("[Error] Couldn't open file (%d)!\n", ss.str());
+        exit(EXIT_FAILURE);
+    }
+
+    for(int i=0; i<v->size(); i++){
+        fprintf(f, "%d,%d\n", (*v)[i].first+1, (*v)[i].second+1 );
+    }
+
+    fclose(f);
+}
+
 
 /** 
  * Auxiliary
@@ -55,7 +103,6 @@ int aux_sort_idx(double** C, int** nidx, double** ndist, int N, int M, int m, in
 	return 0;
 	
 }
-
 
 
 
@@ -345,6 +392,9 @@ Runtime startup(int argc, char** argv)
         printf("[Error] Matrix B wasn't specified!\n Exiting...\n");
         exit(EXIT_FAILURE);
     }
+
+    strcpy(rt.URIa, _a_filename);
+    strcpy(rt.URIb, _b_filename);
 
     // Convert Matrix A to CSR for Optimization
     if(rt.opt_csr_a)
