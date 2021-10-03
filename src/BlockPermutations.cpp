@@ -7,6 +7,26 @@
 
 #include "BlockPermutations.hpp"
 
+
+BlockPermutations::BlockPermutations(){
+
+    #if (PERM_BLOCK_SIZE != 9)
+        printf("[Error] Block size is not 9.\n");
+        exit(EXIT_FAILURE);
+    #endif    
+
+    int pr = 1; // permutations
+    int upper = (int)pow(2, PERM_BLOCK_SIZE);
+    if(upper > 1){
+    for(int i=upper-1; i<=upper; i++){
+        pr = pr * i;
+    }
+    }
+    // printf("[Info] Permutations: %d\n", pr);
+
+    permutations.resize(pr+1); // +1 for safety
+}
+
 int BlockPermutations::block_data_matrix_mult(int L, int R){
 
     bool aL = (L >> 8)&1;

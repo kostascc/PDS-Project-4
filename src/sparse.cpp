@@ -1,6 +1,13 @@
+/**
+ * PDS Project 4
+ * 
+ * 2021 Ⓒ K. Chatzis
+ * kachatzis <at> ece.auth.gr
+ **/
+
 #include "sparse.hpp"
 
-void sparseSortMtx(Matrix* mx){
+void sparseSortMtx(CSCMatrix* mx){
 
     // For each set of pointers
     #pragma omp parallel for
