@@ -1,7 +1,7 @@
 #include "v1.hpp"
 
 
-void v1_execute(Runtime rt){
+void V1::Execute(Runtime rt){
 
     // Matrix required to be CSR
     if(!rt.opt_csr_a){
@@ -85,8 +85,9 @@ void v1_execute(Runtime rt){
 // A recursive binary search function. It returns
 // location of x in given array arr[l..r] is present,
 // otherwise -1
-bool binarySearch(int* arr, int l, int r, int x)
+bool V1::binarySearch(int* arr, int l, int r, int x)
 {
+
     if (r >= l) {
         int mid = l + (r - l) / 2;
   
@@ -108,4 +109,5 @@ bool binarySearch(int* arr, int l, int r, int x)
     // We reach here when element is not
     // present in array
     return false;
+    
 }

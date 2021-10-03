@@ -304,6 +304,7 @@ Runtime startup(int argc, char** argv)
                 if(_tmp_int>0 && _tmp_int<=64)
                 {
                     _threads = _tmp_int;
+                    rt.threads = _threads;
                     continue;
                 }else{
                     printf("[Warning] Threads should be between 1 and 64!\n");
@@ -361,6 +362,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--a-transpose")==0)
         {
             _a_transpose = true;
+            continue;
         }
 
         /**
@@ -369,6 +371,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--b-transpose")==0)
         {
             _b_transpose = true;
+            continue;
         }
 
         /**
@@ -377,6 +380,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--f-transpose")==0)
         {
             _f_transpose = true;
+            continue;
         }
 
         /**
@@ -385,6 +389,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--a-twocolumncoo")==0)
         {
             _a_three_column_coo = false;
+            continue;
         }
 
         /**
@@ -393,6 +398,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--b-twocolumncoo")==0)
         {
             _b_three_column_coo = false;
+            continue;
         }
 
         /**
@@ -401,6 +407,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--f-twocolumncoo")==0)
         {
             _f_three_column_coo = false;
+            continue;
         }
 
         /**
@@ -409,6 +416,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--opt-csr-a")==0)
         {
             rt.opt_csr_a = true;
+            continue;
         }
 
         /**
@@ -417,6 +425,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--v1")==0)
         {
             rt.v1 = true;
+            continue;
         }
 
         /**
@@ -425,6 +434,7 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--v2")==0)
         {
             rt.v2 = true;
+            continue;
         }
 
     }

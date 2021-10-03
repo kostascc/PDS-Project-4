@@ -1,9 +1,9 @@
 /**
  * PDS Project 4
  * 
- * Copyright 2021 Ⓒ K. Chatzis
+ * 2021 Ⓒ K. Chatzis
  * kachatzis <at> ece.auth.gr
- */
+ **/
 
 #ifndef CSCMATRIX_HPP_
 #define CSCMATRIX_HPP_

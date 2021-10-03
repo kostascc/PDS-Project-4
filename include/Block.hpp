@@ -1,3 +1,10 @@
+/**
+ * PDS Project 4
+ * 
+ * 2021 Ⓒ K. Chatzis
+ * kachatzis <at> ece.auth.gr
+ **/
+
 #ifndef BLOCK_HPP_
 #define BLOCK_HPP_
 

@@ -1,4 +1,12 @@
+/**
+ * PDS Project 4
+ * 
+ * 2021 Ⓒ K. Chatzis
+ * kachatzis <at> ece.auth.gr
+ **/
+
 #include "Block.hpp"
+
 
 Block::Block(int linBegin, int colBegin){
   this->linBegin = linBegin;

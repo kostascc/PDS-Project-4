@@ -15,7 +15,7 @@
 #include <time.h>
 #include <string.h>
 #include "mat.h"
-#include "mpi_wrapper.h"
+#include "MPIUtil.hpp"
 #include <mpi.h>
 #include "omp.h"
 #include "mmarket.hpp"

@@ -18,7 +18,9 @@
 #include "mmarket.hpp"
 #include "mmio.h"
 #include "v1.hpp"
+#include "v2.hpp"
 #include "BlockPermutations.hpp"
+#include "CSCBLocking.hpp"
 
 
 using namespace std;
@@ -27,11 +29,17 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
+    MPI_Request mr;
+    
+    
     Runtime rt = startup(argc, argv);
 
-    if(rt.v1){
-        v1_execute(rt);
-    }
+    if(rt.v1)
+        V1::Execute(rt);
+
+    if(rt.v2)
+        V2::Execute(rt);
 
     return 0;
+
 }

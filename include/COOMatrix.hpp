@@ -21,11 +21,11 @@ using namespace std;
 
 class COOMatrix {
   public:    
-    vector<pair<int,int>> coo;
+    vector<pair<int,int>> coo;  // <Line,Column> pairs 
     int nnz;
 
     COOMatrix(){
-        coo.resize(COO_DEFAULT_SIZE);
+        coo.reserve(COO_DEFAULT_SIZE);
         nnz = 0;
     }
 

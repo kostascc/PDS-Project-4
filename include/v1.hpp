@@ -7,8 +7,15 @@
 #include <windows.h>
 #include <algorithm>
 
-void v1_execute(Runtime rt);
+using namespace std;
 
-bool binarySearch(int* arr, int l, int r, int x);
+static class V1{
+    public:
+
+        static void Execute(Runtime rt);
+
+        static bool binarySearch(int* arr, int l, int r, int x);
+
+};
 
 #endif
