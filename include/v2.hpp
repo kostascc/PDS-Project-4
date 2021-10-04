@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "BlockPermutations.hpp"
 #include "Block.hpp"
+#include "CSCBlocking.hpp"
 
 using namespace std;
 
