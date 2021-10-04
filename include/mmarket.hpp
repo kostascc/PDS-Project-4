@@ -22,6 +22,12 @@
 #include "sparse.hpp"
 
 
+// Do NOT Change this! Hardcoded block size.
+#define MATRIX_BLOCK_DIVISOR 3
+
+#define ALLOW_ONLY_RECTANGULAR_MATRICES true
+
+
 /**
  * Import Matrix-Market file
  **/

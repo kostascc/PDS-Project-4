@@ -48,7 +48,7 @@ void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_co
     if (mm_is_complex(matcode) && mm_is_matrix(matcode) && 
             mm_is_sparse(matcode) )
     {
-        printf("[Error] Sorry, this application does not support ");
+        printf("[Error] Sorry, this application does not support");
         printf("Market Market type: [%s]\n", mm_typecode_to_str(matcode));
         exit(EXIT_FAILURE);
     }
@@ -59,7 +59,22 @@ void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_co
         printf("[Error] mm_read_mtx_crd_size failed.\n");
         exit(EXIT_FAILURE);
     }
+
+    // Discard non-rectangular matrices if required
+    #if ALLOW_ONLY_RECTANGULAR_MATRICES == true
+        printf("[Error] Non rectangular matrices are not allowed\n");
+        exit(EXIT_FAILURE);
+    #endif
         
+
+    // Add padding on matrices, to make
+    // the CSC Blocking possible.
+    M = M % MATRIX_BLOCK_DIVISOR == 0?
+        M : M + 3 - M % MATRIX_BLOCK_DIVISOR;
+    N = N % MATRIX_BLOCK_DIVISOR == 0?
+        N : N + 3 - N % MATRIX_BLOCK_DIVISOR;    
+
+    
 
     /* reseve memory for matrices */
 
