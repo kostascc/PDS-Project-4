@@ -17,7 +17,7 @@
             "type": "cppvsdbg", 
             "request": "launch",
             "program": "./nvcc.o",
-            "args": ["--v1", "--opt-csr-a", "-a", "../resources/cage3.mtx", "-b", "../resources/cage3.mtx", "-t", "8"],
+            "args": ["--v1", "--opt-csr-a", "-a", "../resources/1138_bus.mtx", /*"--a-twocolumncoo",*/ "-b", "../resources/1138_bus.mtx", /*"--b-twocolumncoo",*/ "-f", "../resources/1138_bus.mtx", /*"--f-twocolumncoo",*/ "-t", "8"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/src",
             "environment": [],
