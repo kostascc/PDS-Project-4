@@ -13,7 +13,6 @@
 #include <time.h>
 #include <stdint.h>
 #include "msort.hpp"
-// #include <cilk/cilk.h>
 
 
 /**
