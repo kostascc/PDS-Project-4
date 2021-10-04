@@ -19,7 +19,7 @@
 #include "mmio.h"
 #include "v1.hpp"
 #include "BlockPermutations.hpp"
-#include "CSCBLocking.hpp"
+#include "CSCBlocking.hpp"
 
 
 using namespace std;
