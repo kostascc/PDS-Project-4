@@ -40,19 +40,40 @@ void V2::Execute(Runtime rt){
     BlockPermutations permute = BlockPermutations();
     permute.Permutate(rt.threads);
 
-    /**
-     * TODO: Add padding on the input CSC matrices, for 
-     * the case where the matrix is not divisible by 3.
-     **/
+    Block block = Block();
+
+    uint64_t blocksAvoided = 0;     // Count of blocks that were skipped
+    uint64_t blocksCalculated = 0;  // Count of blocks that were calculated
 
     // For each block in the initial Matrix
     for(int i=0; i<A->H; i+=BLOCK_HEIGHT){      // For each block-starting line
         for(int j=0; j<A->W; j+=BLOCK_WIDTH){   // For each block-starting column
 
             // Block with starting point at i, j
-            Block block = Block(i, j);
+            block.UpdateBlockPosition(i, j);
 
+            // Initiate the block using the filter
+            block.BlockOR( CSCBlocking::GetFilterBlockValue(F, i, j) );
 
+            // For each intermediate block
+            for(int k=0; k<A->H; k+=BLOCK_HEIGHT){
+
+                if (block.isAllOnes() ){
+                    blocksAvoided++;
+                    break;
+                }
+                blocksCalculated++;
+
+                // OR the previous block value with the  
+                // current intermediate block multiplication
+                block.BlockOR(
+                    permute.PermutationIdx(
+                        CSCBlocking::GetBlockValue(A, k, i),
+                        CSCBlocking::GetBlockValue(B, k, j)
+                    )
+                );
+                
+            }
 
         }
     }
