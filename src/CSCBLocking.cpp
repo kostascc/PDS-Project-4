@@ -5,7 +5,7 @@
  * kachatzis <at> ece.auth.gr
  **/
 
-#include "CSCBLocking.hpp"
+#include "CSCBlocking.hpp"
 
 int CSCBlocking::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
 {
@@ -143,6 +143,19 @@ int CSCBlocking::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
 
     return value >> 1;
 }
+
+
+static int GetFilterBlockValue(CSCMatrix* M, int linBegin, int colBegin){
+
+    // Get 1-active value
+    int value = CSCBlocking::GetBlockValue(M, linBegin, colBegin);
+
+    // Flip bits by applying a mask:
+    // 0x1FF = 511 = 0b111111111
+    return value ^ 0x1FF;
+
+}
+
 
 int CSCBlocking::BinarySearch(int *arr, int l, int r, int x)
 {

@@ -34,6 +34,17 @@ static class CSCBlocking {
     static int GetBlockValue(CSCMatrix* M, int linBegin, int colBegin);
 
     /**
+     * Calculates the integer data value of a 
+     * filter block, using a Matrix in CSC format.
+     * The resulting data contains ones in places where
+     * the filter doesn't require calculations.
+     * @param linBegin Line at Upper left corner of block.
+     * @param colBegin Column at Upper left corner of block.
+     * @return Integer value of block in column-first format (CSC).
+     **/
+    static int GetFilterBlockValue(CSCMatrix* M, int linBegin, int colBegin);
+
+    /**
      * Add COO Values from 
      **/
     static void AddCOOfromBlockValue(COOMatrix* M, int blockValue, int linBegin, int colBegin);

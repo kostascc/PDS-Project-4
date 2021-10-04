@@ -28,16 +28,32 @@ using namespace std;
  **/
 static class Block {
 
-  public:  
+  private:  
+    int value;      // Integer value of block (column-first/CSC)
+    int maxValue;   // Max possible value of block
     int linBegin;   // Line of Upper-Left corner
     int colBegin;   // Column of Upper-Left corner
-    int value;      // Integer value of block (column-first/CSC)
-  private:  
-    int maxValue;
 
   public:
 
-    Block(int linBegin, int colBegin);
+    Block();
+
+    /**
+     * Update block position
+     * 
+     * @param linBegin Upper left line of block
+     * @param colBegin Upper left column of block
+     **/
+    void UpdateBlockPosition(int linBegin, int colBegin);
+
+    /**
+     * Executes the OR operation on the block and 
+     * it's next state.
+     * 
+     * @param nextValue calculated block value to be 
+     * added to the existent block
+     **/
+    void BlockOR(int nextValue);
 
     /**
      * Check if block is All-Ones
