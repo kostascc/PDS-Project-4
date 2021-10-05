@@ -6,21 +6,21 @@
  * kachatzis <at> ece.auth.gr
  **/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <cstdio>
-#include <mpi.h>
-#include <cuda_runtime.h>
-#include <omp.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <cstdio>
+// #include <mpi.h>
+// #include <cuda_runtime.h>
+// #include <omp.h>
 #include "utils.hpp"
-#include "utils.cuh"
+// #include "utils.cuh"
 #include "auxlib.hpp"
-#include "mmarket.hpp"
-#include "mmio.h"
+// #include "mmarket.hpp"
+// #include "mmio.hpp"
 #include "v1.hpp"
 #include "v2.hpp"
-#include "BlockPermutations.hpp"
-#include "CSCBlocking.hpp"
+// #include "BlockPermutations.hpp"
+// #include "CSCBlocking.hpp"
 
 
 using namespace std;
@@ -29,11 +29,8 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-    MPI_Request mr;
-    
-    
     Runtime rt = startup(argc, argv);
-
+    
     if(rt.v1)
         V1::Execute(rt);
 

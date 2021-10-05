@@ -13,8 +13,8 @@ void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_co
     bool __show_info = true; // Show Progress
 
     // Start Clock
-    utils::Clock clock = utils::Clock();
-    clock.startClock();
+    // utils::Clock clock = utils::Clock();
+    // clock.startClock();
 
 
     int ret_code;
@@ -62,8 +62,10 @@ void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_co
 
     // Discard non-rectangular matrices if required
     #if ALLOW_ONLY_RECTANGULAR_MATRICES == true
-        printf("[Error] Non rectangular matrices are not allowed\n");
-        exit(EXIT_FAILURE);
+        if(M != N){
+            printf("[Error] Non rectangular matrices are not allowed\n");
+            exit(EXIT_FAILURE);
+        }
     #endif
         
 
@@ -188,8 +190,8 @@ void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_co
     fflush(stdin);
     fflush(stdout);
 
-    if(__show_info)
-        printf("[Info] MMARKET Import Took %s\n", clock.stopClock());
+    // if(__show_info)
+    //     printf("[Info] MMARKET Import Took %s\n", clock.stopClock());
 
 }
 

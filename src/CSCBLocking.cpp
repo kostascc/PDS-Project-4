@@ -36,7 +36,7 @@ int CSCBlocking::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
         int pStart = M->cscp[colBegin + i];       // Pointer of column starting
         int pEnd = M->cscp[colBegin + i + 1] - 1; // Pointer of column ending
 
-        printf("i / p - p : %d / %d - %d\n", i, pStart, pEnd);
+        // printf("i / p - p : %d / %d - %d\n", i, pStart, pEnd);
 
         if (pStart > pEnd)
         {
@@ -145,7 +145,7 @@ int CSCBlocking::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
 }
 
 
-static int GetFilterBlockValue(CSCMatrix* M, int linBegin, int colBegin){
+int CSCBlocking::GetFilterBlockValue(CSCMatrix* M, int linBegin, int colBegin){
 
     // Get 1-active value
     int value = CSCBlocking::GetBlockValue(M, linBegin, colBegin);
