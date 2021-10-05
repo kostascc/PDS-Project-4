@@ -27,7 +27,7 @@ void Block::BlockOR(int nextValue){
 bool Block::isAllOnes(){
 
   #if DBG_BLOCK_CHECK_VALUE_OVERFLOW == true
-    if (value > this->maxValue){
+    if (value > this->maxValue || value < 0){
       printf("[Error] Block Value overflow\n");
       exit(EXIT_FAILURE);
     }
