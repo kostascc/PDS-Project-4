@@ -43,6 +43,20 @@ class BlockPermutations {
      **/
     int PermutationIdx(int leftState, int rightState);
     
+    /**
+     * Retrieve a specific permutation.
+     * 
+     * @param permutationIdx Index of permutation to receive
+     **/
+    int GetPermutationAt(int permutationIdx);
+
+    /**
+     * Retrieve the permutation of two block values.
+     * 
+     * @param leftState value of first block
+     * @param rightState value of second block
+     **/
+    int GetPermutation(int leftState, int rightState);
     
     private:
       

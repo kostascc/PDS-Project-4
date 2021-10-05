@@ -103,6 +103,16 @@ void BlockPermutations::Permutate(int threads){
     
 }
 
+int BlockPermutations::GetPermutationAt(int permutationIdx){
+    return permutations.at(permutationIdx);
+}
+
+int BlockPermutations::GetPermutation(int leftState, int rightState){
+    return permutations.at(
+                PermutationIdx(leftState, rightState)
+    );
+}
+
 
 // static void Combine(BlockPermutations** C, BlockPermutations** A, BlockPermutations** B){
 // }
