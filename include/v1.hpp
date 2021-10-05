@@ -4,12 +4,12 @@
 #include "Runtime.hpp"
 #include "CSCMatrix.hpp"
 #include "auxlib.hpp"
-#include <windows.h>
-#include <algorithm>
+// #include <windows.h>
+// #include <algorithm>
 
 using namespace std;
 
-static class V1{
+class V1{
     public:
 
         static void Execute(Runtime rt);

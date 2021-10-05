@@ -5,15 +5,16 @@
 #include "CSCMatrix.hpp"
 #include "COOMatrix.hpp"
 #include "auxlib.hpp"
-#include <windows.h>
-#include <algorithm>
+// #include <windows.h>
+// #include <algorithm>
+#include <time.h>
 #include "BlockPermutations.hpp"
 #include "Block.hpp"
 #include "CSCBlocking.hpp"
 
 using namespace std;
 
-static class V2{
+class V2{
 
     public:
 
