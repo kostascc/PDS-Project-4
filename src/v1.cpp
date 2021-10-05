@@ -25,9 +25,11 @@ void V1::Execute(Runtime rt){
     // fclose(f);
 
 
-    // Start Clock
-    utils::Clock clock = utils::Clock();
-    clock.startClock();
+    // Start Timer
+    time_t tim;
+    srand((unsigned) time(&tim));
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
  
     // Resulting COO pairs
     std::vector<std::pair<int,int>> coo;
@@ -44,7 +46,7 @@ void V1::Execute(Runtime rt){
 
         // Foreach Row of Matrix A
         // (or column of A transposed)
-        #pragma omp parallel for 
+        #pragma omp parallel for num_threads(rt.threads)
         for(int i=0; i<rt.A->W; i++){
             
             // Foreach Non-Zero on i-th row of Matrix A
@@ -52,11 +54,11 @@ void V1::Execute(Runtime rt){
                 
                 if(binarySearch(rt.B->csci, rt.B->cscp[j], rt.B->cscp[j+1]-1, rt.A->csci[k])){
                     
-                    #pragma omp critical
-                    {
+                    // #pragma omp critical
+                    // {
                         coo.emplace_back(i, j);
                         NZ ++;
-                    }
+                    // }
                     
                     break;
                 }
@@ -67,17 +69,21 @@ void V1::Execute(Runtime rt){
 
     }
 
-    printf("[Info] V1 Took %s\n", clock.stopClock());
+    // Stop Timer
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);
+    printf("[Info] V1 took %f s\n", delta_us);
 
-    std::sort(coo.begin(), coo.end(), [](auto &left, auto &right) {
-        if(left.second == right.second)
-            return left.first < right.first;
-            return left.second < right.second;
-    });
+    // TODO: Was Removed when porting to linux. Must fix
+    // std::sort(coo.begin(), coo.end(), [](auto &left, auto &right) {
+    //     if(left.second == right.second)
+    //         return left.first  < right.first ;
+    //         return left.second < right.second;
+    // });
 
     exportCOOVectorP(&coo, rt, "v1");
 
-    printf("NZ: %d\n", NZ);
+    printf("[Info] NNZ: %d\n", NZ);
 
 }
 
