@@ -13,10 +13,10 @@
 #include <cuda_runtime.h>
 #include <omp.h>
 #include "utils.hpp"
-#include "utils.cuh"
+// #include "utils.cuh"
 #include "auxlib.hpp"
 #include "mmarket.hpp"
-#include "mmio.h"
+#include "mmio.hpp"
 #include "v1.hpp"
 #include "BlockPermutations.hpp"
 #include "CSCBlocking.hpp"

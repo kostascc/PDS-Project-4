@@ -12,7 +12,7 @@
 #include <time.h>
 #include <stdint.h>
 #include "mat.h"
-#include <mmio.h>
+#include <mmio.hpp>
 #include <stdbool.h>
 #include <iostream>
 #include "utils.hpp"

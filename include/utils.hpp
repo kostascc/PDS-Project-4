@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <fstream>
-#include "vector_functions.h"
+// #include "vector_functions.h"
 #include <math.h>
 
 
@@ -32,7 +32,6 @@
 #ifndef MIN
 #define MIN(a,b) ((a < b) ? a : b)
 #endif
-
 
 using namespace std;
 

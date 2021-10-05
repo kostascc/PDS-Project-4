@@ -10,7 +10,7 @@
 #define MPI_UTIL_HPP__
 
 
-#include "mpi.h"
+#include <mpi.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

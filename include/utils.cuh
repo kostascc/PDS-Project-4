@@ -19,14 +19,14 @@
 #include <stdlib.h>
 #include <vector>
 #include <fstream>
-#include "vector_functions.h"
-#include "cuda.h"
-#include "cuda_runtime.h"
+// #include "vector_functions.h"
+// #include "cuda.h"
+// #include "cuda_runtime.h"
 #include <math.h>
-#include "cuda_runtime_api.h"
-#include "device_launch_parameters.h"
-#include "cuda_device_runtime_api.h"
-#include "vector_functions.h"
+// #include "cuda_runtime_api.h"
+// #include "device_launch_parameters.h"
+// #include "cuda_device_runtime_api.h"
+// #include "vector_functions.h"
 
 
 #ifndef POW2
