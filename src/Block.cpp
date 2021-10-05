@@ -18,6 +18,10 @@ void Block::UpdateBlockPosition(int linBegin, int colBegin){
   this->linBegin = linBegin;
   this->colBegin = colBegin;
   this->value = 0;
+//   this->maxValue = (int)pow(2, POW2(BLOCK_LINE_SIZE)) -1;
+//   if(maxValue < 511){
+//       printf("Max Value wtf : %d\n", maxValue);
+//   }
 }
 
 void Block::BlockOR(int nextValue){
@@ -34,4 +38,15 @@ bool Block::isAllOnes(){
   #endif
 
   return (value == this->maxValue);
+}
+
+void Block::CleanFilter(int filter){
+    // Ones in the positions where a
+    // calculation is required.
+    // Zeroes in places to be cleaned.
+    this->value &= filter;
+}
+
+void Block::Reset(){
+    this->value = 0;
 }

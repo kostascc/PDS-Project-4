@@ -11,7 +11,8 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
-#include "utils.cuh"
+#include "utils.hpp"
+//#include "utils.cuh"
 
 #ifndef BLOCK_LINE_SIZE
 #define BLOCK_LINE_SIZE 3
@@ -26,9 +27,9 @@ using namespace std;
  * Block of the CSC Matrix in 
  * integer value format.
  **/
-static class Block {
+class Block {
 
-  private:  
+  public:  
     int value;      // Integer value of block (column-first/CSC)
     int maxValue;   // Max possible value of block
     int linBegin;   // Line of Upper-Left corner
@@ -59,6 +60,20 @@ static class Block {
      * Check if block is All-Ones
      **/
     bool isAllOnes();
+
+    /**
+     * Remove the value of the filter
+     * 
+     * @param filter The value with ones in the positions
+     * where a calculation is required, and zeroes in positions
+     * to be cleaned.
+     **/
+    void CleanFilter(int filter);
+
+    /** 
+     * Resets block value
+     **/
+    void Reset();
 
 };
 
