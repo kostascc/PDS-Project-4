@@ -23,13 +23,14 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <time.h>
 
 
 
 /**********************************************
  *          MPI Communication Tags
  **********************************************/
-#define MPI_INITIALIZING           10
+// #define MPI_INITIALIZING           0x0
 /**********************************************/
 
 
@@ -39,16 +40,23 @@
  **/
 #define _TIMER_PRINT_VAR "TIMER_PRINT"
 
-#ifndef min
-#define min(x,y) (((x) < (y)) ? (x) : (y))
-#endif
+// #ifndef min
+// #define min(x,y) (((x) < (y)) ? (x) : (y))
+// #endif
 
-#ifndef max
-#define max(x,y) (((x) > (y)) ? (x) : (y))
-#endif
+// #ifndef max
+// #define max(x,y) (((x) > (y)) ? (x) : (y))
+// #endif
 
 #ifndef pow2
 #define pow2(x)  x*x
+#endif
+
+/**
+ * Definne POSIX Time on Windows
+ **/
+#ifdef __INTELLISENSE__
+    #define clock_gettime(x)
 #endif
 
 /**
