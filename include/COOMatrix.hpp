@@ -15,7 +15,7 @@
 
 #define MPI_COO_ADDPOINT 0xC00A
 
-#define COO_DEFAULT_SIZE 1<<14
+#define COO_DEFAULT_RESERVE_SIZE 1<<19
 
 using namespace std;
 
@@ -25,7 +25,7 @@ class COOMatrix {
     int nnz;
 
     COOMatrix(){
-        coo.reserve(COO_DEFAULT_SIZE);
+        coo.reserve(COO_DEFAULT_RESERVE_SIZE);
         nnz = 0;
     }
 
@@ -41,6 +41,11 @@ class COOMatrix {
      * in CSC Format.
      **/ 
     void CSCsort();
+
+    /**
+     * Reset COO Matrix
+     **/
+    void Reset();
 
 };
 

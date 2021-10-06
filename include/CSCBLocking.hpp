@@ -16,7 +16,17 @@
 
 #define BLOCK_LINE_SIZE 3  // Do NOT change! Hard-coded size!
 
-#define DBG_CSCBLOCKING_BOUNDS_CHECK true
+#define DBG_CSCBLOCKING_BOUNDS_CHECK
+
+
+#define B001 1
+#define B010 2
+#define B011 3
+#define B100 4
+#define B101 5
+#define B110 6
+#define B111 7
+
 
 using namespace std;
 
@@ -49,7 +59,7 @@ class CSCBlocking {
      **/
     static void AddCOOfromBlockValue(COOMatrix* M, int blockValue, int linBegin, int colBegin);
 
-    private:
+    // private:
 
     /**
      * Binary Search algorithm for 
