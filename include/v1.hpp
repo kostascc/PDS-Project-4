@@ -6,6 +6,7 @@
 #include "auxlib.hpp"
 // #include <windows.h>
 // #include <algorithm>
+#include "COOMatrix.hpp"
 
 using namespace std;
 

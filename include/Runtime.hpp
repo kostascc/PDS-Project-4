@@ -22,6 +22,7 @@ class Runtime {
     bool v2;        // Run V2
     bool v3;        // Run V3
     bool opt_csr_a; // Optimization: Use CSR for Matrix A
+    bool opt_csr_f; // Optimization: Use CSR for Matrix F
     char URIa[URI_STRING_SIZE];
     char URIb[URI_STRING_SIZE];
     char URIf[URI_STRING_SIZE];
