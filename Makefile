@@ -1,7 +1,20 @@
+#####################################
+## Parallel & Distributed Systems  ##
+## Project 4                       ##
+##                                 ##
+## Ⓒ 2021 K. Chatzis              ##
+## kachatzis <at> ece.auth.gr      ##
+#####################################
+
 CC := mpic++
+
 SRC_DIR := ./src
+
 OBJ_DIR := ./obj
+
+# CFLAGS := -Wall -fopenmp -lm -O3 -g -Iinclude -pg
 CFLAGS := -Wall -fopenmp -lm -O3 -g -Iinclude
+
 TARGET := debug
 
 # $(wildcard *.cpp /xxx/xxx/*.cpp): get all .cpp files from the current directory and dir "/xxx/xxx/"
