@@ -20,9 +20,9 @@ using namespace std;
 
 void V2::Execute(Runtime rt){   
 
-    // Matrix required to be CSR
-    if(!rt.opt_csr_a){
-        printf("[Error] Flag '--opt-csr-a' is required for V2.\n");
+    // Matrices A and F required to be in CSR format
+    if(!rt.opt_csr_a || !rt.opt_csr_f){
+        printf("[Error] Flags '--opt-csr-a' and '--opt-csr-f' are required for V2.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -69,99 +69,76 @@ void V2::Execute(Runtime rt){
         tcoo.emplace_back(COOMatrix());
     }
 
+    Block block;
+    COOMatrix coo;
+
     // For each block in the initial Matrix
 
-    #pragma omp parallel for shared(tblock, tcoo, A, B, F, C) num_threads(rt.threads)
+    #pragma omp parallel for \
+    shared(tblock,tcoo,A,B,F,C) \
+    private(block,coo) /*num_threads(rt.threads)*/
     for(int i=0; i<A->H; i+=BLOCK_HEIGHT){      // For each block-starting line
         
-        int t = omp_get_thread_num();
+        //int t = omp_get_thread_num();
 
-        if(t > rt.threads)
-            printf("Thread Id out of bounds\n");
+        // if(t > rt.threads)
+        //     printf("Thread Id out of bounds\n");
 
-        if(t>omp_get_thread_num())
-            printf("Thread count out of bounds\n");
+        // if(t>omp_get_thread_num())
+        //     printf("Thread count out of bounds\n");
         // if(tmpp==0){
         //     tmpp++;
         //     #pragma omp critical
         //         printf("\nthread: %d\n", t);
         // }
+        coo.Reset();
         
         for(int j=0; j<A->W; j+=BLOCK_WIDTH){   // For each block-starting column
 
             // Block with starting point at i, j
-            tblock[t].UpdateBlockPosition(i, j);
-            tblock.at(t).Reset();
+            block.UpdateBlockPosition(i, j);
+            block.Reset();
 
+            
             // Initiate the block using the filter
-            tblock[t].BlockOR( CSCBlocking::GetFilterBlockValue(F, i, j) );
+            block.BlockOR( CSCBlocking::GetFilterBlockValue(F, i, j) );
             
-
-            // int middlek = (int) (A->H / 2);
-            
-            // // For the middle intermediate block
-            // tblock[t].BlockOR( 
-            //     permute.GetPermutation(
-            //         CSCBlocking::GetBlockValue(A, middlek, i),
-            //         CSCBlocking::GetBlockValue(B, middlek, j)
-            //     )
-            // );
             
             // For each intermediate block other than the middle one
             for(int k=0; k<A->H; k+=BLOCK_HEIGHT){
                 
-                if (tblock[t].isAllOnes() ){
+                if (block.isAllOnes() ){
+                    // #pragma omp atomic
                     // blocksAvoided += (int)((A->H-k) / 3);
                     break;
                 }
 
-                // if(k = middlek)
-                //     continue;
-
-                // blocksCalculated++;
-
-                // int prevBlockValue = block.value;
-
                 // OR the previous block value with the  
                 // current intermediate block multiplication
-                tblock[t].BlockOR( 
+                block.BlockOR( 
                     permute.GetPermutation(
                         CSCBlocking::GetBlockValue(A, k, i),
                         CSCBlocking::GetBlockValue(B, k, j)
                     )
                 );
 
-                // printf("%d * %d = %d\n%d -> %d\n", 
-                //     CSCBlocking::GetBlockValue(A, k, i),
-                //     CSCBlocking::GetBlockValue(B, k, j),
-                //     permute.GetPermutation(
-                //             CSCBlocking::GetBlockValue(A, k, i),
-                //             CSCBlocking::GetBlockValue(B, k, j)),
-                //     prevBlockValue,
-                //     block.value
-                // );
             }
 
             // Block value has been calculated
-            tblock[t].CleanFilter( CSCBlocking::GetBlockValue(F, i, j) );
+            block.CleanFilter( CSCBlocking::GetBlockValue(F, i, j) );
 
             // Add block to COO values
-            CSCBlocking::AddCOOfromBlockValue(&tcoo[t], tblock[t].value, i, j);
+            CSCBlocking::AddCOOfromBlockValue(&coo, block.value, i, j);
 
         }
 
-        // #pragma omp critical
-        // {
-            // C->coo.insert( C->coo.end(), tcoo[t].coo.begin(), tcoo[t].coo.end() );
-            // C->nnz += tcoo[t].nnz;
-        // }
+        #pragma omp critical
+        {
+            C->coo.insert( C->coo.end(), coo.coo.begin(), coo.coo.end() );
+            C->nnz += coo.nnz;
+        }
     }
 
-    // Add all coo values from the threads
-    for(int t = 0; t<rt.threads; t++){
-        C->coo.insert( C->coo.end(), tcoo[t].coo.begin(), tcoo[t].coo.end() );
-        C->nnz += tcoo[t].nnz;
-    }
 
     // Stop Timer
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);

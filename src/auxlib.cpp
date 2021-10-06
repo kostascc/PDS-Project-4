@@ -237,6 +237,7 @@ Runtime startup(int argc, char** argv)
         printf(" --f-transpose      Transpose Matrix F\n");
         printf(" --f-twocolumncoo   MM file of Matrix F doesn't contain values\n");
         printf(" --opt-csr-a        Optimization: Uses CSR storage for Matrix A\n");
+        printf(" --opt-csr-f        Optimization: Uses CSR storage for Matrix F\n");
         printf(" --v1               Sequential algorithm (V1)\n");
         printf(" --v2               Parallelized algorithm (V2)\n");
         exit(EXIT_FAILURE);
@@ -420,6 +421,15 @@ Runtime startup(int argc, char** argv)
         }
 
         /**
+         * " --opt-csr-f"
+         */
+        if(strcmp(argv[i],"--opt-csr-f")==0)
+        {
+            rt.opt_csr_f = true;
+            continue;
+        }
+
+        /**
          * " --v1"
          */
         if(strcmp(argv[i],"--v1")==0)
@@ -461,6 +471,8 @@ Runtime startup(int argc, char** argv)
     // Convert Matrix A to CSR for Optimization
     if(rt.opt_csr_a)
         _a_transpose = !_a_transpose;
+    if(rt.opt_csr_f)
+        _f_transpose = !_f_transpose;
 
     /**
     * Configure threads on system runtime level
