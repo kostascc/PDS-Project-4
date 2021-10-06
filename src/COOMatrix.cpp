@@ -23,3 +23,10 @@ void COOMatrix::CSCsort(){
   });
 
 }
+
+
+void COOMatrix::Reset(){
+    this->coo.clear();
+    this->coo.reserve(COO_DEFAULT_RESERVE_SIZE);
+    this->nnz = 0;
+}
