@@ -3,27 +3,11 @@
 
 void V1::Execute(Runtime rt){
 
-    // Matrix required to be CSR
-    if(!rt.opt_csr_a){
-        printf("[Error] Flag '--opt-csr-a' is required for V1.\n");
+    // Matrices A and F required to be in CSR format
+    if(!rt.opt_csr_a || !rt.opt_csr_f){
+        printf("[Error] Flags '--opt-csr-a' and '--opt-csr-f' are required for V1.\n");
         exit(EXIT_FAILURE);
     }
-
-
-    // // debug input Matrix
-    // FILE *f = fopen("debug.txt", "wb");
-    // if (f == NULL)
-    // {
-    //     printf("[Error] Couldn't open file!\n");
-    //     exit(EXIT_FAILURE);
-    // }
-    // for(int i=0; i<rt.B->W; i++){
-    //     for(int j=rt.B->cscp[i]; j<rt.B->cscp[i+1]; j++){
-    //         fprintf(f, "%d,%d\n", rt.B->csci[j]+1, i+1);
-    //     }
-    // }
-    // fclose(f);
-
 
     // Start Timer
     time_t tim;
@@ -31,14 +15,16 @@ void V1::Execute(Runtime rt){
     struct timespec start, end;
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
  
-    // Resulting COO pairs
-    std::vector<std::pair<int,int>> coo;
-    int NZ = 0;
+    COOMatrix C = COOMatrix();
+    COOMatrix coo = COOMatrix();
 
-    // Vector Reduction
-
+    
+    #pragma omp parallel for \
+    private(coo) shared(C)
     // For Each Column of Matrix B
     for(int j=0; j<rt.B->W; j++){
+
+        coo.Reset();
 
         // Caution:
         // Matrix A is Transposed, thus rows are meant
@@ -46,25 +32,30 @@ void V1::Execute(Runtime rt){
 
         // Foreach Row of Matrix A
         // (or column of A transposed)
-        #pragma omp parallel for num_threads(rt.threads)
         for(int i=0; i<rt.A->W; i++){
             
             // Foreach Non-Zero on i-th row of Matrix A
             for(int k=rt.A->cscp[i]; k<rt.A->cscp[i+1]; k++){
+
+                if(!V1::binarySearch(rt.F->csci, rt.F->cscp[j], rt.F->cscp[j+1]-1, rt.A->csci[k]))
+                    continue;
                 
-                if(binarySearch(rt.B->csci, rt.B->cscp[j], rt.B->cscp[j+1]-1, rt.A->csci[k])){
+                if(V1::binarySearch(rt.B->csci, rt.B->cscp[j], rt.B->cscp[j+1]-1, rt.A->csci[k])){
                     
-                    // #pragma omp critical
-                    // {
-                        coo.emplace_back(i, j);
-                        NZ ++;
-                    // }
+                    coo.addPoint(i, j);
                     
                     break;
+
                 }
 
             }
 
+        }
+
+        #pragma omp critical
+        {
+            C.coo.insert( C.coo.end(), coo.coo.begin(), coo.coo.end() );
+            C.nnz += coo.nnz;
         }
 
     }
@@ -81,9 +72,9 @@ void V1::Execute(Runtime rt){
     //         return left.second < right.second;
     // });
 
-    exportCOOVectorP(&coo, rt, "v1");
+    // exportCOOVectorP(&coo, rt, "v1");
 
-    printf("[Info] NNZ: %d\n", NZ);
+    printf("[Info] NNZ: %d\n", C.nnz);
 
 }
 
