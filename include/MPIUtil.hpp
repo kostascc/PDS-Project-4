@@ -1,9 +1,11 @@
 /**
- * Parallel & Distributed Systems
- * Project 4
+ * Parallel & Distributed Systems:
+ * Boolean Matrix-Matrix Multiplication
  * 
- * Ⓒ 2021 K. Chatzis
+ * 2021 Ⓒ K. Chatzis
  * kachatzis <at> ece.auth.gr
+ * Dept. of Electrical & Computer Engineering
+ * Aristotle University of Thessaloniki
  **/
 
 #ifndef MPI_UTIL_HPP__

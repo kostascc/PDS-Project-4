@@ -1,3 +1,13 @@
+/**
+ * Parallel & Distributed Systems:
+ * Boolean Matrix-Matrix Multiplication
+ * 
+ * 2021 Ⓒ K. Chatzis
+ * kachatzis <at> ece.auth.gr
+ * Dept. of Electrical & Computer Engineering
+ * Aristotle University of Thessaloniki
+ **/
+
 #ifndef V2_HPP__
 #define V2_HPP__
 
