@@ -237,9 +237,11 @@ Runtime startup(int argc, char** argv)
         printf(" --f-transpose      Transpose Matrix F\n");
         printf(" --f-twocolumncoo   MM file of Matrix F doesn't contain values\n");
         printf(" --opt-csr-a        Optimization: Uses CSR storage for Matrix A\n");
+        printf(" --opt-csr-b        Optimization: Uses CSR storage for Matrix B\n");
         printf(" --opt-csr-f        Optimization: Uses CSR storage for Matrix F\n");
-        printf(" --v1               Sequential algorithm (V1)\n");
-        printf(" --v2               Parallelized algorithm (V2)\n");
+        printf(" --v1               V1: O(n^3) algorithm\n");
+        printf(" --v2               V2: 3x3 Block BMM\n");
+        printf(" --v3               V3: Four-Russians (8x8 Block)\n");
         exit(EXIT_FAILURE);
     }
 
@@ -421,6 +423,15 @@ Runtime startup(int argc, char** argv)
         }
 
         /**
+         * " --opt-csr-b"
+         */
+        if(strcmp(argv[i],"--opt-csr-b")==0)
+        {
+            rt.opt_csr_b = true;
+            continue;
+        }
+
+        /**
          * " --opt-csr-f"
          */
         if(strcmp(argv[i],"--opt-csr-f")==0)
@@ -444,6 +455,15 @@ Runtime startup(int argc, char** argv)
         if(strcmp(argv[i],"--v2")==0)
         {
             rt.v2 = true;
+            continue;
+        }
+
+        /**
+         * " --v3"
+         */
+        if(strcmp(argv[i],"--v3")==0)
+        {
+            rt.v3 = true;
             continue;
         }
 
@@ -471,6 +491,8 @@ Runtime startup(int argc, char** argv)
     // Convert Matrix A to CSR for Optimization
     if(rt.opt_csr_a)
         _a_transpose = !_a_transpose;
+    if(rt.opt_csr_b)
+        _b_transpose = !_b_transpose;
     if(rt.opt_csr_f)
         _f_transpose = !_f_transpose;
 
