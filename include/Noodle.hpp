@@ -21,6 +21,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include "CSCMatrix.hpp"
 
 
 using namespace std;
@@ -36,14 +37,60 @@ using namespace std;
  **/
 class Noodle {
 
+    private:
+
+        /* Pointer to csci, of the start of each column.  *
+         * This is a pointer to the actual cscp array,    *
+         * with an offset to the selected starting column.*/
+        int* cscp;  
+
+        /* Pointer to csci, of the start of each block.   *
+         * Blocks are continuous, thus blocks of a column *
+         * start at the end of the previous one.          */
+        int* cscb;  
+
+        /* Non-Zeroes. This is a pointer to the actual    *
+         * csci array, with an ofset to the selected      *
+         * column.                                        */
+        int* csci;  
+
+        // Default height of Matrix
+        int  H;     
+
     public:
 
-        int* cscp;  // Pointer to cscb, of the start of each column
-        int* cscb;  // Pointer to csco, of the start of each block
-        int* csci;  // Non-Zero rows
+        /**
+         * Noodle Constructor.
+         * 
+         * @param H Default Matrix height
+         **/
+        Noodle(int H);
 
-    Noodle();
+        /**
+         * Loads 8 full columns of the CSC Matrix,
+         * devided into blocks of length 8.
+         * 
+         * @param csc CSCMatrix object.
+         * @param col The leftmost column of the Noodle.
+         **/
+        void LoadNoodleFromCSC(CSCMatrix* csc, int col);
 
+        /**
+         * Resets Noodle.
+         * (Not Required between Noodle Loads)
+         **/
+        void Reset();
+
+    private:
+
+        /**
+         * Divide the CSC Matrix into blocks.
+         * This is used internally after successful 
+         * column initializations, to build the
+         * cscb array.
+         **/
+        void CreateBlocks();
+    
 };
 
 #endif
