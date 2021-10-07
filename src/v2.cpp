@@ -4,16 +4,10 @@
  * Do not change the following three values.
  * Block size is hardcoded!
  **/
-#ifndef BLOCK_SIZE
-    #define BLOCK_SIZE 9
-#endif
-#ifndef BLOCK_HEIGHT
-    #define BLOCK_HEIGHT 3
-#endif
-#ifndef BLOCK_WIDTH
-    #define BLOCK_WIDTH 3
-#endif
 
+#define BLOCK_SIZE 9
+#define BLOCK_HEIGHT 3
+#define BLOCK_WIDTH 3
 
 using namespace std;
 
@@ -50,32 +44,32 @@ void V2::Execute(Runtime rt){
 
     // All possible 3x3 blocks, and every
     // multiplication between them.
-    BlockPermutations permute = BlockPermutations();
+    Block9Permutations permute = Block9Permutations();
     permute.Permutate(rt.threads);
 
     // printf("[Info] Permutations Took %s\n", clock.stopClock());
 
-    // Block block = Block();
+    // Block block = Block9();
 
-    uint64_t blocksAvoided = 0;     // Count of blocks that were skipped
-    uint64_t blocksCalculated = 0;  // Count of blocks that were calculated
+    // uint64_t blocksAvoided = 0;     // Count of blocks that were skipped
+    // uint64_t blocksCalculated = 0;  // Count of blocks that were calculated
 
-    vector<Block> tblock;
-    vector<COOMatrix> tcoo;
-    tblock.reserve(rt.threads+1);
-    tcoo.reserve(rt.threads+1);
-    for(int i=0; i<rt.threads+1; i++){
-        tblock.emplace_back(Block());
-        tcoo.emplace_back(COOMatrix());
-    }
+    // vector<Block9> tblock;
+    // vector<COOMatrix> tcoo;
+    // tblock.reserve(rt.threads+1);
+    // tcoo.reserve(rt.threads+1);
+    // for(int i=0; i<rt.threads+1; i++){
+    //     tblock.emplace_back(Block9());
+    //     tcoo.emplace_back(COOMatrix());
+    // }
 
-    Block block;
+    Block9 block;
     COOMatrix coo;
 
     // For each block in the initial Matrix
 
     #pragma omp parallel for \
-    shared(tblock,tcoo,A,B,F,C) \
+    shared(A,B,F,C) \
     private(block,coo) /*num_threads(rt.threads)*/
     for(int i=0; i<A->H; i+=BLOCK_HEIGHT){      // For each block-starting line
         
@@ -101,7 +95,7 @@ void V2::Execute(Runtime rt){
 
             
             // Initiate the block using the filter
-            block.BlockOR( CSCBlocking::GetFilterBlockValue(F, i, j) );
+            block.BlockOR( CSCBlocking9::GetFilterBlockValue(F, i, j) );
             
             
             // For each intermediate block other than the middle one
@@ -117,18 +111,18 @@ void V2::Execute(Runtime rt){
                 // current intermediate block multiplication
                 block.BlockOR( 
                     permute.GetPermutation(
-                        CSCBlocking::GetBlockValue(A, k, i),
-                        CSCBlocking::GetBlockValue(B, k, j)
+                        CSCBlocking9::GetBlockValue(A, k, i),
+                        CSCBlocking9::GetBlockValue(B, k, j)
                     )
                 );
 
             }
 
             // Block value has been calculated
-            block.CleanFilter( CSCBlocking::GetBlockValue(F, i, j) );
+            block.CleanFilter( CSCBlocking9::GetBlockValue(F, i, j) );
 
             // Add block to COO values
-            CSCBlocking::AddCOOfromBlockValue(&coo, block.value, i, j);
+            CSCBlocking9::AddCOOfromBlockValue(&coo, block.value, i, j);
 
         }
 
@@ -147,7 +141,7 @@ void V2::Execute(Runtime rt){
 
     printf("[Info] NNZ: %d\n", C->nnz);
 
-    printf("[Info] Blocks Calculated: %d, Blocks Avoided: %d\n", blocksCalculated, blocksAvoided);
+    // printf("[Info] Blocks Calculated: %d, Blocks Avoided: %d\n", blocksCalculated, blocksAvoided);
 
 }
 
