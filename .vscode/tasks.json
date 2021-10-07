@@ -9,7 +9,7 @@
         {
             "label": "task_compile",
             "type": "shell",
-            "command": "cd src ; nvcc -o nvcc.o $(ls -n *.c) $(ls -n *.cpp) $(ls -n *.cu)  -I 'C:/Program Files (x86)/Microsoft SDKs/MPI/Include' -I '../include' -L 'C:/Program Files (x86)/Microsoft SDKs/MPI/Lib/x64' -L 'C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/lib/x64' -Xcompiler /openmp -Xcompiler /O2 -Xcompiler \"-openmp:llvm\" -Xcompiler \"-openmp:experimental\" -lmsmpi -lcudart",
+            "command": "cd src ; nvcc -o exec.o $(ls -n *.c) $(ls -n *.cpp) $(ls -n *.cu)  -I 'C:/Program Files (x86)/Microsoft SDKs/MPI/Include' -I '../include' -L 'C:/Program Files (x86)/Microsoft SDKs/MPI/Lib/x64' -L 'C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/lib/x64' -Xcompiler /openmp -Xcompiler /O2 -Xcompiler \"-openmp:llvm\" -Xcompiler \"-openmp:experimental\" -lmsmpi -lcudart",
             "dependsOn": ["task_clean"]
         },
     ]

@@ -13,11 +13,17 @@
         //     "cwd": "${workspaceFolder}/src",
         // },
         {
-            "name": "nvcc",
+            "name": "exec",
             "type": "cppvsdbg", 
             "request": "launch",
-            "program": "./nvcc.o",
-            "args": ["--v1", "--opt-csr-a", "-a", "../resources/1138_bus.mtx", /*"--a-twocolumncoo",*/ "-b", "../resources/1138_bus.mtx", /*"--b-twocolumncoo",*/ "-f", "../resources/1138_bus.mtx", /*"--f-twocolumncoo",*/ "-t", "8"],
+            "program": "./exec.o",
+            "args": ["--v1", "--v2", 
+                "--opt-csr-a", 
+                "-a", "../resources/bcspwr10.mtx", /*"--a-twocolumncoo",*/
+                "-b", "../resources/bcspwr10.mtx", /*"--b-twocolumncoo",*/
+                "-f", "../resources/bcspwr10.mtx", /*"--f-twocolumncoo",*/
+                "-t", "1"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/src",
             "environment": [],
