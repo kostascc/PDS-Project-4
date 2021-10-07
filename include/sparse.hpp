@@ -23,7 +23,7 @@ void sparseSortMtx(CSCMatrix* mx);
 // Quicksort of an array between two indiices
 void quicksort(int* arr, int first, int last);
 
-//void CSCtoBlock(Matrix* M, int** b, Runtime runtime);
+//void CSCtoBlock9(Matrix* M, int** b, Runtime runtime);
 
 
 

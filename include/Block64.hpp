@@ -34,7 +34,7 @@ class Block64 {
 
   public:  
 
-    uint64_t value; // Integer value of block (Column-Major)
+    uint64_t value; // Integer value of block (Column-Major format)
     int linBegin;   // Line of Upper-Left corner
     int colBegin;   // Column of Upper-Left corner
 
@@ -54,7 +54,7 @@ class Block64 {
      * it's next state.
      * 
      * @param nextValue calculated block value to be 
-     * added to the existent block
+     * added to the existent block (Column-Major format)
      **/
     void BlockOR(uint64_t nextValue);
 
@@ -68,7 +68,7 @@ class Block64 {
      * 
      * @param filter The value with ones in the positions
      * where a calculation is required, and zeroes in positions
-     * to be cleaned.
+     * to be cleaned (Column-Major format).
      **/
     void CleanFilter(uint64_t filter);
 

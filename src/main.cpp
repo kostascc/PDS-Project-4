@@ -8,8 +8,8 @@
  * Aristotle University of Thessaloniki
  **/
 
-// #include <stdio.h>
-// #include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 // #include <cstdio>
 // #include <mpi.h>
 // #include <cuda_runtime.h>
@@ -21,9 +21,10 @@
 // #include "mmio.hpp"
 #include "v1.hpp"
 #include "v2.hpp"
-// #include "BlockPermutations.hpp"
+#include "v3.hpp"
 #include "Block9Permutations.hpp"
 #include "CSCBlocking9.hpp"
+#include "COOMatrix.hpp"
 
 
 using namespace std;
