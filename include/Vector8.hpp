@@ -15,45 +15,51 @@
 #include <vector>
 #include <math.h>
 #include "utils.hpp"
+#include "Noodle.hpp"
+
 
 using namespace std;
 
 
 /**
- * Auxiliary class for Vector-Vector multiplication.
- * The supported vectors are exclusively of length 8.
+ * A class to store and use vectors of length 8.
+ * For a quicker execution, two Vector8 instances should
+ * be created and used throughout the algorithm,
+ * without them being destroyed.
  **/
 class Vector8{
 
-    private:
+    private: 
+
+        uint8_t vec;    // Vector
+
+    public:
 
         /**
-         * Magic Array
+         * Constructor without initial vector value.
          **/
-        const static uint64_t magic[];
-
-
-    public: 
+        Vector8();
 
         /**
-         * Lookup of vector b in the magic array.
+         * Constructor of a vector with a size of 8.
          * 
-         * @param b Vector b from operation "a * f(b)".
-         * 
-         * @return f(b) operation.
+         * @param vec Vector
          **/
-        static uint64_t Lookup(uint64_t b);
+        Vector8(uint8_t vec);
 
         /**
-         * Multiplication of two vectors, of length 8.
+         * Loads a vector of length 8 from a Noodle.
          * 
-         * @param a Vector a
-         * @param b Vector b
-         * 
-         * @returns Column-Major 8x8 Matrix, encoded in
-         * a 64bit unsigned integer.
+         * @param noodle A Noodle object with the respective columns loaded.
+         * @param col Column of vector in Noodle (not global).
+         * @param block Index of block from the top of the column.
          **/
-        static uint64_t Mult(uint8_t a, uint8_t b); 
+        void LoadVectorFromNoodle(Noodle* noodle, int col, int block);
+
+        /**
+         * Resets Vector
+         **/
+        void Reset();
 
 };
 
