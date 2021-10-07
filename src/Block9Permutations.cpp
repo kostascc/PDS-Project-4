@@ -5,10 +5,10 @@
  * kachatzis <at> ece.auth.gr
  */
 
-#include "BlockPermutations.hpp"
+#include "Block9Permutations.hpp"
 
 
-BlockPermutations::BlockPermutations(){
+Block9Permutations::Block9Permutations(){
 
     #if (PERM_BLOCK_SIZE != 9)
         printf("[Error] Block size is not 9.\n");
@@ -27,7 +27,7 @@ BlockPermutations::BlockPermutations(){
     permutations.resize(pr+1); // +1 for safety
 }
 
-int BlockPermutations::block_data_matrix_mult(int L, int R){
+int Block9Permutations::block_data_matrix_mult(int L, int R){
 
     bool aL = (L >> 8)&1;
     bool bL = (L >> 7)&1;
@@ -65,11 +65,11 @@ int BlockPermutations::block_data_matrix_mult(int L, int R){
                 );
 }
 
-int BlockPermutations::PermutationIdx(int leftState, int rightState){
+int Block9Permutations::PermutationIdx(int leftState, int rightState){
     return leftState * ((int) pow(2, PERM_BLOCK_SIZE) -1) + rightState; 
 }
 
-void BlockPermutations::permutate_thread(int LSideBegin, int LSideEnd){
+void Block9Permutations::permutate_thread(int LSideBegin, int LSideEnd){
     
     int RSideEnd = (int)pow(2, PERM_BLOCK_SIZE) -1;
 
@@ -86,7 +86,7 @@ void BlockPermutations::permutate_thread(int LSideBegin, int LSideEnd){
 }
 
 
-void BlockPermutations::Permutate(int threads){
+void Block9Permutations::Permutate(int threads){
 
     // Start a permutation calculator
     // for each specified thread
@@ -103,24 +103,24 @@ void BlockPermutations::Permutate(int threads){
     
 }
 
-int BlockPermutations::GetPermutationAt(int permutationIdx){
+int Block9Permutations::GetPermutationAt(int permutationIdx){
     return permutations.at(permutationIdx);
 }
 
-int BlockPermutations::GetPermutation(int leftState, int rightState){
+int Block9Permutations::GetPermutation(int leftState, int rightState){
     return permutations.at(
                 PermutationIdx(leftState, rightState)
     );
 }
 
 
-// static void Combine(BlockPermutations** C, BlockPermutations** A, BlockPermutations** B){
+// static void Combine(Block9Permutations** C, Block9Permutations** A, Block9Permutations** B){
 // }
 
 
-// static void MPISend(BlockPermutations** C, int node){
+// static void MPISend(Block9Permutations** C, int node){
 // }
 
 
-// static void MPIReceive(BlockPermutations** C, int node){
+// static void MPIReceive(Block9Permutations** C, int node){
 // }

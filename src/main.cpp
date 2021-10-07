@@ -20,7 +20,8 @@
 #include "v1.hpp"
 #include "v2.hpp"
 // #include "BlockPermutations.hpp"
-// #include "CSCBlocking.hpp"
+#include "Block9Permutations.hpp"
+#include "CSCBlocking9.hpp"
 
 
 using namespace std;

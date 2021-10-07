@@ -5,8 +5,8 @@
  * kachatzis <at> ece.auth.gr
  **/
 
-#ifndef BLOCK_HPP_
-#define BLOCK_HPP_
+#ifndef BLOCK9_HPP_
+#define BLOCK9_HPP_
 
 #include <iostream>
 #include <vector>
@@ -24,10 +24,10 @@
 using namespace std;
 
 /**
- * Block of the CSC Matrix in 
+ * Block9 of the CSC Matrix in 
  * integer value format.
  **/
-class Block {
+class Block9 {
 
   public:  
     int value;      // Integer value of block (column-first/CSC)
@@ -37,7 +37,7 @@ class Block {
 
   public:
 
-    Block();
+    Block9();
 
     /**
      * Update block position

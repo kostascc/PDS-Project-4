@@ -6,9 +6,9 @@
  **/
 
 
-#include "CSCBlocking.hpp"
+#include "CSCBlocking9.hpp"
 
-int CSCBlocking::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
+int CSCBlocking9::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
 {
 
     // // Check the hardcoded block size
@@ -45,21 +45,21 @@ int CSCBlocking::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
         }
 
         // Find the first line
-        _a = CSCBlocking::BinarySearch(M->csci, pStart, pEnd, linBegin);
+        _a = CSCBlocking9::BinarySearch(M->csci, pStart, pEnd, linBegin);
 
         if (_a == -1)
         {
             // The first line wasn't found
             // Find the second line
-            _b = CSCBlocking::BinarySearch(M->csci, pStart, pEnd, linBegin + 1);
+            _b = CSCBlocking9::BinarySearch(M->csci, pStart, pEnd, linBegin + 1);
 
             if (_b == -1)
             {
                 // The second line wasn't found
                 // Find third Line
-                // _c = CSCBlocking::BinarySearch(M->csci, pStart, pEnd, linBegin + 2);
+                // _c = CSCBlocking9::BinarySearch(M->csci, pStart, pEnd, linBegin + 2);
 
-                if (CSCBlocking::BinarySearch(M->csci, pStart, pEnd, linBegin + 2) == -1)
+                if (CSCBlocking9::BinarySearch(M->csci, pStart, pEnd, linBegin + 2) == -1)
                 {
                     // No line was found
                     continue;
@@ -171,10 +171,10 @@ int CSCBlocking::GetBlockValue(CSCMatrix *M, int linBegin, int colBegin)
 }
 
 
-int CSCBlocking::GetFilterBlockValue(CSCMatrix* M, int linBegin, int colBegin){
+int CSCBlocking9::GetFilterBlockValue(CSCMatrix* M, int linBegin, int colBegin){
 
     // Get 1-active value
-    int value = CSCBlocking::GetBlockValue(M, linBegin, colBegin);
+    int value = CSCBlocking9::GetBlockValue(M, linBegin, colBegin);
 
     // Flip bits by applying a mask:
     // 0x1FF = 511 = 0b111111111
@@ -183,7 +183,7 @@ int CSCBlocking::GetFilterBlockValue(CSCMatrix* M, int linBegin, int colBegin){
 }
 
 
-int CSCBlocking::BinarySearch(int *arr, int l, int r, int x)
+int CSCBlocking9::BinarySearch(int *arr, int l, int r, int x)
 {
 
     if (r >= l)
@@ -198,11 +198,11 @@ int CSCBlocking::BinarySearch(int *arr, int l, int r, int x)
         // If element is smaller than mid, then
         // it can only be present in left subarray
         if (arr[mid] > x)
-            return CSCBlocking::BinarySearch(arr, l, mid - 1, x);
+            return CSCBlocking9::BinarySearch(arr, l, mid - 1, x);
 
         // Else the element can only be present
         // in right subarray
-        return CSCBlocking::BinarySearch(arr, mid + 1, r, x);
+        return CSCBlocking9::BinarySearch(arr, mid + 1, r, x);
     }
 
     // We reach here when the element
@@ -210,7 +210,7 @@ int CSCBlocking::BinarySearch(int *arr, int l, int r, int x)
     return -1;
 }
 
-void CSCBlocking::AddCOOfromBlockValue(COOMatrix *M, int blockValue, int linBegin, int colBegin)
+void CSCBlocking9::AddCOOfromBlockValue(COOMatrix *M, int blockValue, int linBegin, int colBegin)
 {
 
     // Check the hardcoded block size

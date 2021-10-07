@@ -5,8 +5,8 @@
  * kachatzis <at> ece.auth.gr
  */
 
-#ifndef BLOCKPERMUTATIONS_HPP_
-#define BLOCKPERMUTATIONS_HPP_
+#ifndef BLOCK9PERMUTATIONS_HPP_
+#define BLOCK9PERMUTATIONS_HPP_
 
 #include <iostream>
 #include <vector>
@@ -18,7 +18,7 @@
 
 using namespace std;
 
-class BlockPermutations {
+class Block9Permutations {
   public:    
     vector<int> permutations;
     int lSideIdxBegin, lSideIdxEnd; // Permutation bounds
@@ -27,7 +27,7 @@ class BlockPermutations {
      * Initializes Block Permutations.
      * Call Permutate(...) to develop calculate thhe permutations.
      **/
-    BlockPermutations();
+    Block9Permutations();
 
     /**
      * Creates possible permutations out of
@@ -76,23 +76,23 @@ class BlockPermutations {
 
 
     // /**
-    //  * Combines BlockPermutation differend BlockPermutations
+    //  * Combines BlockPermutation differend Block9Permutations
     //  * objects.
-    //  * @param A First BlockPermutations object
-    //  * @param B Second BlockPermutations object
+    //  * @param A First Block9Permutations object
+    //  * @param B Second Block9Permutations object
     //  * @param C The combination of A and B
     //  **/
-    // static void Combine(BlockPermutations** C, BlockPermutations** A, BlockPermutations** B);
+    // static void Combine(Block9Permutations** C, Block9Permutations** A, Block9Permutations** B);
 
     // /**
-    //  * Sends BlockPermutations Object over MPI to a node
+    //  * Sends Block9Permutations Object over MPI to a node
     //  **/
-    // static void MPISend(BlockPermutations** C, int node);
+    // static void MPISend(Block9Permutations** C, int node);
 
     // /** 
-    //  * Receives BlockPermutations Object over MPI from a node
+    //  * Receives Block9Permutations Object over MPI from a node
     //  **/
-    // static void MPIReceive(BlockPermutations** C, int node);
+    // static void MPIReceive(Block9Permutations** C, int node);
 };
 
 #endif

@@ -5,8 +5,8 @@
  * kachatzis <at> ece.auth.gr
  **/
 
-#ifndef CSCBLOCKING_HPP_
-#define CSCBLOCKING_HPP_
+#ifndef CSCBLOCKING9_HPP_
+#define CSCBLOCKING9_HPP_
 
 #include <iostream>
 #include <vector>
@@ -30,7 +30,7 @@
 
 using namespace std;
 
-class CSCBlocking {
+class CSCBlocking9 {
 
   public:  
 

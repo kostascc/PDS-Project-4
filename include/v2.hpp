@@ -8,9 +8,9 @@
 // #include <windows.h>
 // #include <algorithm>
 #include <time.h>
-#include "BlockPermutations.hpp"
-#include "Block.hpp"
-#include "CSCBlocking.hpp"
+#include "Block9Permutations.hpp"
+#include "Block9.hpp"
+#include "CSCBlocking9.hpp"
 
 using namespace std;
 
