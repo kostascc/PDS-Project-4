@@ -23,8 +23,10 @@
 #include <sstream>
 #include "CSCMatrix.hpp"
 
-
 using namespace std;
+
+// Check for column overflows
+#define NOODLE_CHECK_COL_OVERFLOW
 
 
 /**
@@ -49,7 +51,7 @@ class Noodle {
          * start at the end of the previous one.          */
         int* cscb;  
 
-        /* Non-Zeroes. This is a pointer to the actual    *
+        /* Non-Zero rows. This is a pointer to the actual *
          * csci array, with an ofset to the selected      *
          * column.                                        */
         int* csci;  
@@ -77,7 +79,8 @@ class Noodle {
 
         /**
          * Resets Noodle.
-         * (Not Required between Noodle Loads)
+         * (Not Required between Noodle Loads, as it 
+         * instantiates new arrays)
          **/
         void Reset();
 
