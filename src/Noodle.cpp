@@ -14,21 +14,33 @@
 Noodle::Noodle(int H){
     csci = 0;
     cscp = 0;
-    cscb = new int[(H/8)+1];
+    cscb = new int[(H/NOODLE_BLOCK_LENGTH)*NOODLE_BLOCK_COLS+1];
+    this->H = H;
 }
 
 
 void Noodle::LoadNoodleFromCSC(CSCMatrix* csc, int col){
+
+    #ifdef NOODLE_CHECK_COL_OVERFLOW
+        if( csc->W <= col){
+            printf("[Error] Noodle Column Overflow (LoadNoodleFromCSC): %d\n", col);
+            exit(EXIT_FAILURE);
+        }
+    #endif
+
     csci = csc->csci;
-    cscp = &csc->cscp[0];
-    
+    cscp = &csc->cscp[col];
+
     if(csc->H != this->H){
         printf("[Info] Noodle Matrix default height changed (%d->%d)\n", 
             this->H, csc->H);
         this->H = csc->H;
-        cscb = new int[(H/8)+1];
+        cscb = new int[(H/NOODLE_BLOCK_LENGTH)*NOODLE_BLOCK_COLS+1];
     }
 
+    // startCol = col;
+
+    printf("cscb size: %d\n", (H/NOODLE_BLOCK_LENGTH)*NOODLE_BLOCK_COLS+1);
 
     Noodle::CreateBlocks();
 
@@ -38,7 +50,7 @@ void Noodle::LoadNoodleFromCSC(CSCMatrix* csc, int col){
 void Noodle::Reset(){
     csci = 0;
     cscp = 0;
-    cscb = new int[(H/8)+1];
+    cscb = new int[(H/NOODLE_BLOCK_LENGTH)*NOODLE_BLOCK_COLS+1];
 }
 
 
