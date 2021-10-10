@@ -28,6 +28,13 @@ using namespace std;
 // Check for column overflows
 #define NOODLE_CHECK_COL_OVERFLOW
 
+// Check overflow while building cscb matrix
+#define NOODLE_CHECK_BLOCKMAKING_OVERFLOW
+
+#define NOODLE_CHECK_CSCB_CONTEXT
+
+#define NOODLE_BLOCK_LENGTH 2
+#define NOODLE_BLOCK_COLS 3
 
 /**
  * Noodle is an auxiliary class assisting to the
@@ -39,7 +46,7 @@ using namespace std;
  **/
 class Noodle {
 
-    private:
+    public:
 
         /* Pointer to csci, of the start of each column.  *
          * This is a pointer to the actual cscp array,    *
@@ -57,9 +64,10 @@ class Noodle {
         int* csci;  
 
         // Default height of Matrix
-        int  H;     
+        int  H;   
 
-    public:
+        // Starting Column (leftmost)
+        // int startCol;
 
         /**
          * Noodle Constructor.
