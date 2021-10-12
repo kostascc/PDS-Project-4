@@ -25,10 +25,14 @@
 #include "msort.hpp"
 #include "Runtime.hpp"
 #include "sparse.hpp"
+#include "Runtime.hpp"
 
 
 // Do NOT Change this! Hardcoded block size.
 #define MATRIX_BLOCK_DIVISOR 3
+
+#define V3_DIVISOR 8
+#define V2_DIVISOR 3
 
 #define ALLOW_ONLY_RECTANGULAR_MATRICES true
 
@@ -36,7 +40,7 @@
 /**
  * Import Matrix-Market file
  **/
-void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_column_coo);
+void mmarket_import(Runtime rt, char* filename, CSCMatrix* mx, bool transpose, bool three_column_coo);
 
 
 #endif  // mmarket_h__

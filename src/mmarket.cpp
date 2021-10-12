@@ -11,7 +11,7 @@
 #include "mmarket.hpp"
 
 
-void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_column_coo){
+void mmarket_import(Runtime rt, char* filename, CSCMatrix* mx, bool transpose, bool three_column_coo){
 
     bool __show_info = true; // Show Progress
 
@@ -74,10 +74,11 @@ void mmarket_import(char* filename, CSCMatrix* mx, bool transpose, bool three_co
 
     // Add padding on matrices, to make
     // the CSC Blocking possible.
-    M = M % MATRIX_BLOCK_DIVISOR == 0?
-        M : M + 3 - M % MATRIX_BLOCK_DIVISOR;
-    N = N % MATRIX_BLOCK_DIVISOR == 0?
-        N : N + 3 - N % MATRIX_BLOCK_DIVISOR;    
+    int sizeDivisor = rt.v3? V3_DIVISOR : V2_DIVISOR;
+    M = M % sizeDivisor == 0?
+        M : M + sizeDivisor - M % sizeDivisor;
+    N = N % sizeDivisor == 0?
+        N : N + sizeDivisor - N % sizeDivisor;    
 
     
 

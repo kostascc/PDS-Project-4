@@ -499,6 +499,9 @@ Runtime startup(int argc, char** argv)
     if(rt.opt_csr_f)
         _f_transpose = !_f_transpose;
 
+    // Allow only V2 or V3 to run
+    rt.v2 = rt.v3 ? false : rt.v2;
+
     /**
     * Configure threads on system runtime level
     **/
@@ -515,11 +518,11 @@ Runtime startup(int argc, char** argv)
     rt.B = new CSCMatrix();
     rt.F = new CSCMatrix();
 
-    mmarket_import(_a_filename, rt.A, _a_transpose, _a_three_column_coo); // Import MM
+    mmarket_import(rt, _a_filename, rt.A, _a_transpose, _a_three_column_coo); // Import MM
     
-    mmarket_import(_b_filename, rt.B, _b_transpose, _b_three_column_coo); // Import MM
+    mmarket_import(rt, _b_filename, rt.B, _b_transpose, _b_three_column_coo); // Import MM
 
-    mmarket_import(_f_filename, rt.F, _f_transpose, _f_three_column_coo); // Import MM
+    mmarket_import(rt, _f_filename, rt.F, _f_transpose, _f_three_column_coo); // Import MM
     
     return  rt;
 
