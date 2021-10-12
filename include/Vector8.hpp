@@ -20,6 +20,19 @@
 
 using namespace std;
 
+// Check for pointer overflows while loading a vector
+#define VECTOR8_CHECK_LOADING_OVERFLOW
+
+// Check the csci array for erroneous contents
+#define VECTOR8_CHECK_CSCI_CONTEXT
+
+// Length of 8-digit blocks (8 of course)
+#define VECTOR8_BLOCK_LENGTH 8
+
+// 8-digit blocks per Noodle Block
+#define VECTOR8_BLOCKS_PER_NOODLE_BLOCK 1
+
+
 
 /**
  * A class to store and use vectors of length 8.
@@ -29,9 +42,10 @@ using namespace std;
  **/
 class Vector8{
 
-    private: 
+    // private:
+    public: 
 
-        uint8_t vec;    // Vector
+        uint8_t vec;    // Vector, with LSB at the end (down)
 
     public:
 
@@ -51,10 +65,19 @@ class Vector8{
          * Loads a vector of length 8 from a Noodle.
          * 
          * @param noodle A Noodle object with the respective columns loaded.
-         * @param col Column of vector in Noodle (not global).
-         * @param block Index of block from the top of the column.
+         * @param col Column of vector (0 .. 7, or 0 .. Width-1).
+         * @param block Index of block from the top of the column (0 .. H/8-1 ).
          **/
         void LoadVectorFromNoodle(Noodle* noodle, int col, int block);
+
+        /**
+         * Loads a vector of length 8 from a Noodle.
+         * 
+         * @param noodle A Noodle object with the respective columns loaded.
+         * @param col Column of vector (0 .. 7, or 0 .. Width-1).
+         * @param block Index of block from the top of the column (0 .. H/8-1 ).
+         **/
+        static uint8_t GetVectorFromNoodle(Noodle* noodle, int col, int block);
 
         /**
          * Resets Vector
