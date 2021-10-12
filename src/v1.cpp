@@ -14,8 +14,8 @@
 void V1::Execute(Runtime rt){
 
     // Matrices A and F required to be in CSR format
-    if(!rt.opt_csr_a || !rt.opt_csr_f){
-        printf("[Error] Flags '--opt-csr-a' and '--opt-csr-f' are required for V1.\n");
+    if(!rt.opt_csr_a /*|| !rt.opt_csr_f*/){
+        printf("[Error] Flag '--opt-csr-a' is required for V1.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -47,7 +47,7 @@ void V1::Execute(Runtime rt){
             // Foreach Non-Zero on i-th row of Matrix A
             for(int k=rt.A->cscp[i]; k<rt.A->cscp[i+1]; k++){
 
-                if(!V1::binarySearch(rt.F->csci, rt.F->cscp[j], rt.F->cscp[j+1]-1, rt.A->csci[k]))
+                if(!V1::binarySearch(rt.F->csci, rt.F->cscp[i], rt.F->cscp[i+1]-1, rt.A->csci[k]))
                     continue;
                 
                 if(V1::binarySearch(rt.B->csci, rt.B->cscp[j], rt.B->cscp[j+1]-1, rt.A->csci[k])){
