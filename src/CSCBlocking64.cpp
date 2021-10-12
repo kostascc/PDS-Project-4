@@ -40,8 +40,9 @@ void CSCBlocking64::AddCOOfromBlockValue(COOMatrix* M, uint64_t blockValue, int 
     // For each bit of the value,
     // starting from the LSB
     for(int i=0; i<64; i++){
+    
+        if( blockValue & (uint64_t)1  ){
 
-        if( blockValue & (1 << i) ){
             // Note: The value is in Column-Major format, thus
             //   column = i / 8
             //   row    = i % 8
@@ -66,6 +67,8 @@ void CSCBlocking64::AddCOOfromBlockValue(COOMatrix* M, uint64_t blockValue, int 
             #endif
         }
 
+        blockValue = blockValue >> 1;
+        
     }
 
 }
@@ -74,7 +77,7 @@ uint64_t CSCBlocking64::MultiplyBlocks(uint64_t A, uint64_t B, uint64_t F){
     // Initialize with the filter
     uint64_t val = F;   // F contains ones in places that don't need calculation
     int i=0;
-    // val = (uint64_t)0;
+    
     // TODO: Add counter to measure multiplication savings
     
     // For each Column of A and Row of B
@@ -89,6 +92,7 @@ uint64_t CSCBlocking64::MultiplyBlocks(uint64_t A, uint64_t B, uint64_t F){
     // TODO: Maybe optimize time by removing the filter-cleaning afterwards
 
     // Clean Filter
+    // C = (A * B')>0 - F
     return val & (F ^ BLOCK64_MAX_VALUE) ;
 
 }
