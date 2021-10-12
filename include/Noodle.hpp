@@ -22,29 +22,33 @@
 #include <vector>
 #include <sstream>
 #include "CSCMatrix.hpp"
+#include "AUXParameters.hpp"
 
 
 using namespace std;
 
+#ifdef DEBUGGING_CHECKS
 
-// Check for column overflows
-#define NOODLE_CHECK_COL_OVERFLOW
+    // Check for column overflows
+    #define NOODLE_CHECK_COL_OVERFLOW
 
-// Check overflow while building cscb matrix
-#define NOODLE_CHECK_BLOCKMAKING_OVERFLOW
+    // Check overflow while building cscb matrix
+    #define NOODLE_CHECK_BLOCKMAKING_OVERFLOW
 
-// Check cscb calculation errors
-#define NOODLE_CHECK_CSCB_CONTEXT
+    // Check cscb calculation errors
+    #define NOODLE_CHECK_CSCB_CONTEXT
 
-#define NOODLE_CHECK_CSCI_CONTEXT
+    #define NOODLE_CHECK_CSCI_CONTEXT
+
+#endif
 
 // Length of each block
-#define NOODLE_BLOCK_LENGTH 8
+#define NOODLE_BLOCK_LENGTH V3_BLOCK_SIZE*V3_BLOCKS_PER_NOODLE_BLOCK
 
 // Columns to include
 //   0: calculate all columns of the matrix
 //  >0: calculate a specific subset of columns
-#define NOODLE_BLOCK_COLS 0
+#define NOODLE_BLOCK_COLS V3_NOODLE_COLUMNS
 
 
 /**

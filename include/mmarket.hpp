@@ -26,13 +26,12 @@
 #include "Runtime.hpp"
 #include "sparse.hpp"
 #include "Runtime.hpp"
+#include "AUXParameters.hpp"
 
 
-// Do NOT Change this! Hardcoded block size.
-#define MATRIX_BLOCK_DIVISOR 3
 
-#define V3_DIVISOR 8
-#define V2_DIVISOR 3
+#define V3_DIVISOR V3_BLOCK_SIZE*V3_BLOCKS_PER_NOODLE_BLOCK
+#define V2_DIVISOR V2_LINE_SIZE
 
 #define ALLOW_ONLY_RECTANGULAR_MATRICES true
 

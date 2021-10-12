@@ -19,6 +19,7 @@
 #include "Noodle.hpp"
 #include "Vector8.hpp"
 #include "Vector8Util.hpp"
+#include "AUXParameters.hpp"
 
 
 #define BLOCK64_LINE_SIZE 8 
@@ -27,11 +28,15 @@
 
 #define VECTOR8_SIZE 8
 
-#define DBG_CSCBLOCKING_BOUNDS_CHECK
-
 #define BLOCK64_MAX_VALUE 0xFFFFFFFFFFFFFFFF
 
-#define CSCBLOCKING64_CHECK_COO_VALUES
+#ifdef DEBUGGING_CHECKS
+
+    #define DBG_CSCBLOCKING_BOUNDS_CHECK
+
+    #define CSCBLOCKING64_CHECK_COO_VALUES
+
+#endif
 
 
 using namespace std;

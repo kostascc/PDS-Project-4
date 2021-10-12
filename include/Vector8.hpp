@@ -16,21 +16,24 @@
 #include <math.h>
 #include "utils.hpp"
 #include "Noodle.hpp"
+#include "AUXParameters.hpp"
 
 
 using namespace std;
 
-// Check for pointer overflows while loading a vector
-#define VECTOR8_CHECK_LOADING_OVERFLOW
+#ifdef DEBUGGING_CHECKS
+    // Check for pointer overflows while loading a vector
+    #define VECTOR8_CHECK_LOADING_OVERFLOW
 
-// Check the csci array for erroneous contents
-#define VECTOR8_CHECK_CSCI_CONTEXT
+    // Check the csci array for erroneous contents
+    #define VECTOR8_CHECK_CSCI_CONTEXT
+#endif
 
 // Length of 8-digit blocks (8 of course)
-#define VECTOR8_BLOCK_LENGTH 8
+#define VECTOR8_BLOCK_LENGTH V3_BLOCK_SIZE
 
 // 8-digit blocks per Noodle Block
-#define VECTOR8_BLOCKS_PER_NOODLE_BLOCK 1
+#define VECTOR8_BLOCKS_PER_NOODLE_BLOCK V3_BLOCKS_PER_NOODLE_BLOCK
 
 
 
