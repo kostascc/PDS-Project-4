@@ -18,8 +18,8 @@
 #include "mmarket.hpp"
 #include "mmio.hpp"
 #include "v1.hpp"
-#include "BlockPermutations.hpp"
-#include "CSCBlocking.hpp"
+#include "Block9Permutations.hpp"
+#include "CSCBlocking9.hpp"
 
 
 using namespace std;
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
     int linBegin = 3;
     int colBegin = 2;
 
-    int val = CSCBlocking::GetBlockValue(&csc, linBegin, colBegin);
+    int val = CSCBlocking9::GetBlockValue(&csc, linBegin, colBegin);
 
     for (int i = 9; 0 <= i; i--) {
         printf("%c ", (val & (1 << i)) ? '1' : '0');
@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 
     COOMatrix coo = COOMatrix();
 
-    CSCBlocking::AddCOOfromBlockValue(&coo, val, linBegin, colBegin);
+    CSCBlocking9::AddCOOfromBlockValue(&coo, val, linBegin, colBegin);
 
     printf("\nCOO:\n");
 
