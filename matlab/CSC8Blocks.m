@@ -4,8 +4,8 @@ columns = 5;
 length = 2;
 height = 8;
 blocks = columns * height/length;
-csci = [1 2 4 7 8 4 7 1 6];
-cscp = [1 6 6 7 8 10 ];
+csci = [1 2 4 7 8 4 7 1];
+cscp = [1 6 7 8 8 9 9 9 9];
 cscb = [];
 
 % For each column
@@ -34,7 +34,7 @@ for j = 1 : columns
 end
 
 % Add end of table index
-cscb = [cscb i+1];
+cscb = [cscb cscp(size(cscp, 2))];
 
 % Print
 cscb'
