@@ -23,7 +23,9 @@
 #include <sstream>
 #include "CSCMatrix.hpp"
 
+
 using namespace std;
+
 
 // Check for column overflows
 #define NOODLE_CHECK_COL_OVERFLOW
@@ -31,10 +33,19 @@ using namespace std;
 // Check overflow while building cscb matrix
 #define NOODLE_CHECK_BLOCKMAKING_OVERFLOW
 
+// Check cscb calculation errors
 #define NOODLE_CHECK_CSCB_CONTEXT
 
-#define NOODLE_BLOCK_LENGTH 2
-#define NOODLE_BLOCK_COLS 3
+#define NOODLE_CHECK_CSCI_CONTEXT
+
+// Length of each block
+#define NOODLE_BLOCK_LENGTH 8
+
+// Columns to include
+//   0: calculate all columns of the matrix
+//  >0: calculate a specific subset of columns
+#define NOODLE_BLOCK_COLS 0
+
 
 /**
  * Noodle is an auxiliary class assisting to the
@@ -66,19 +77,22 @@ class Noodle {
         // Default height of Matrix
         int  H;   
 
+        // Columns to calculate
+        int cols;
+
         // Starting Column (leftmost)
         // int startCol;
 
         /**
          * Noodle Constructor.
-         * 
-         * @param H Default Matrix height
          **/
-        Noodle(int H);
+        Noodle();
 
         /**
          * Loads 8 full columns of the CSC Matrix,
-         * devided into blocks of length 8.
+         * devided into blocks of length 8.  
+         * If NOODLE_BLOCK_COLS = 0, then all of the columns
+         * are loaded, and col = 0.
          * 
          * @param csc CSCMatrix object.
          * @param col The leftmost column of the Noodle.
@@ -90,7 +104,7 @@ class Noodle {
          * (Not Required between Noodle Loads, as it 
          * instantiates new arrays)
          **/
-        void Reset();
+        // void Reset();
 
     private:
 
@@ -99,8 +113,10 @@ class Noodle {
          * This is used internally after successful 
          * column initializations, to build the
          * cscb array.
+         * 
+         * @param csc CSC Matrix to import
          **/
-        void CreateBlocks();
+        void CreateBlocks(CSCMatrix* csc);
     
 };
 
