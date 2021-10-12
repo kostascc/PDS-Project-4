@@ -27,16 +27,7 @@ void Block64::BlockOR(uint64_t nextValue){
 }
 
 bool Block64::isAllOnes(){
-
-    // No overflow check possible in uint64_t
-    // #ifdef DBG_BLOCK64_CHECK_VALUE_OVERFLOW
-    // if (value > BLOCK64_MAX_VALUE || value < 0){
-    //     printf("[Error] Block Value overflow\n");
-    //     exit(EXIT_FAILURE);
-    // }
-    // #endif
-
-    return (value == (uint64_t)BLOCK64_MAX_VALUE);
+    return ((uint64_t)value == (uint64_t)BLOCK64_MAX_VALUE);
 }
 
 void Block64::CleanFilter(uint64_t filter){
@@ -49,3 +40,4 @@ void Block64::CleanFilter(uint64_t filter){
 void Block64::Reset(){
     this->value = (uint64_t)0;
 }
+ 
