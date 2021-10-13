@@ -22,7 +22,7 @@
     #define V3_BLOCK_SIZE 8
 
     // 8-digit blocks to contain in each Noodle block
-    #define V3_BLOCKS_PER_NOODLE_BLOCK 1
+    #define V3_BLOCKS_PER_NOODLE_BLOCK 4
 
     // Columns to contain in each Noodle.
     // Use 0 to contain the whole Matrix.

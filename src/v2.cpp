@@ -27,7 +27,7 @@ void V2::Execute(Runtime rt){
     // Matrices A and F required to be in CSR format
     if(!rt.opt_csr_a || rt.opt_csr_b || !rt.opt_csr_f){
         printf("[Error] Flags '--opt-csr-a' and '--opt-csr-f' are required for V2.\n");
-        // exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
     // Start Timer
