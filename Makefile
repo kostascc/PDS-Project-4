@@ -12,8 +12,8 @@ SRC_DIR := ./src
 
 OBJ_DIR := ./obj
 
-# CFLAGS := -Wall -fopenmp -lm -O3 -g -Iinclude -pg
-CFLAGS := -Wall -fopenmp -lm -O0 -fstack-protector-all -fstrong-eval-order=some -g -Iinclude
+CFLAGS := -Wall -fopenmp -lm -O3 -g -Iinclude -pg
+# CFLAGS := -Wall -fopenmp -lm -O0 -fstack-protector-all -fstrong-eval-order=some -g -Iinclude
 
 TARGET := debug
 
