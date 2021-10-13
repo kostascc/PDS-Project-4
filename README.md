@@ -7,6 +7,9 @@ make
 ./debug --v1 --opt-csr-a --opt-csr-f -a ./resources/1138_bus.mtx -b ./resources/1138_bus.mtx -f ./resources/1138_bus.mtx -t 6
 ```
 
+Warning! Matrices are automatically padded based on the algorithm. The Height and Width of an imported Matrix may be different than what is stated in the `.mtx` file.
+
+
 Acceptable input arguments:
 ```
  -t <int>           Threads
@@ -28,7 +31,21 @@ Acceptable input arguments:
  --v4               V4: V3 with OpenMPI nodes
 ```
 
+
 Test the OpenMPI execution with:
 ```
 mpirun -np 3 ./debug --v4 --opt-csr-b -a ./resources/1138_bus.mtx -b ./resources/1138_bus.mtx -f ./resources/1138_bus.mtx -t 2
 ```
+
+
+For debugging information and sanity checks, uncomment the `#define DEBUGGING_CHECKS` in `include/AUXParameters.hpp` and:
+```
+make clean
+make
+```
+
+
+To change the length of Blocks in a Noodle, and thus the required memory for V3 and V4, edit `#define V3_BLOCKS_PER_NOODLE_BLOCK 1` in `include/AUXParameters.hpp` to a positive integer of your choice. Acceptable values are 1 through H, where H is the height of the Padded matrix.
+
+The required Memory for V3 is `4* H^2 / (8 * V3_BLOCKS_PER_NOODLE_BLOCK)` bytes, where H is the Height of the input Matrix.
+The required Memory for V4 is the above calculation multiplied by the number of nodes.
