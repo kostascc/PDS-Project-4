@@ -5,7 +5,7 @@ Sparse Compressed (CSC) Boolean Matrix-Matrix Multiplication Algorithms - Parall
 Note: Measured times in the report were flawed, as the timing was done by mistake with the `-O0` flag for g++. Actual times are in many cases a tenth of the recorded time.
 
 
-Test this by executing:
+Test the code by executing:
 ```
 make
 ./debug --v1 --opt-csr-a --opt-csr-f -a ./resources/1138_bus.mtx -b ./resources/1138_bus.mtx -f ./resources/1138_bus.mtx -t 6
