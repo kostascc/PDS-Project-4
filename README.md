@@ -1,6 +1,10 @@
 # PDS-Project-4
 Sparse Compressed (CSC) Boolean Matrix-Matrix Multiplication Algorithms - Parallel &amp; Distributed Systems
 
+
+Note: Measured times in the report were flawed, as the timing was done by mistake with the `-O0` flag for g++. Actual times are in many cases a tenth of the recorded time.
+
+
 Test this by executing:
 ```
 make
