@@ -124,8 +124,6 @@ void V3::Execute(Runtime rt){
     float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);
     printf("[Info] V3 took %f s\n", delta_us);
 
-    printf("[Info] NNZ: %d\n", C->nnz);
-
 }
 
 #undef BLOCK_SIZE

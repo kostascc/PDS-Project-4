@@ -271,7 +271,6 @@ void V4::Execute(Runtime rt){
         float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);
         printf("[Info] V4 took %f s\n", delta_us);
 
-        printf("[Info] NNZ: %d\n", C->nnz);
 
         mpi.Finalize();
     }

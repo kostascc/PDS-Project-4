@@ -13,7 +13,7 @@
 
     // Debugging Flag. 
     // Comment out to disable debugging checks and information.
-    #define DEBUGGING_CHECKS
+    // #define DEBUGGING_CHECKS
 
     // 9x9 Matrix height
     #define V2_LINE_SIZE 3
