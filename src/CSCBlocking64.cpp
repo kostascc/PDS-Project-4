@@ -68,7 +68,7 @@ void CSCBlocking64::AddCOOfromBlockValue(COOMatrix* M, uint64_t blockValue, int 
         }
 
         blockValue = blockValue >> 1;
-        
+
     }
 
 }
@@ -93,6 +93,6 @@ uint64_t CSCBlocking64::MultiplyBlocks(uint64_t A, uint64_t B, uint64_t F){
 
     // Clean Filter
     // C = (A * B')>0 - F
-    return val & (F ^ BLOCK64_MAX_VALUE) ;
+    return val /*& (F ^ BLOCK64_MAX_VALUE)*/ ;
 
 }

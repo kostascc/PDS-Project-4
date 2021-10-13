@@ -245,6 +245,7 @@ Runtime startup(int argc, char** argv)
         printf(" --v1               V1: O(n^3) algorithm\n");
         printf(" --v2               V2: 3x3 Block BMM\n");
         printf(" --v3               V3: Four-Russians (8x8 Block)\n");
+        printf(" --v4               V4: V3 with OpenMPI nodes\n");
         exit(EXIT_FAILURE);
     }
 
@@ -470,6 +471,15 @@ Runtime startup(int argc, char** argv)
             continue;
         }
 
+        /**
+         * " --v4"
+         */
+        if(strcmp(argv[i],"--v4")==0)
+        {
+            rt.v4 = true;
+            continue;
+        }
+
     }
 
     if (!a_ready){
@@ -500,7 +510,8 @@ Runtime startup(int argc, char** argv)
         _f_transpose = !_f_transpose;
 
     // Allow only V2 or V3 to run
-    rt.v2 = rt.v3 ? false : rt.v2;
+    rt.v2 = rt.v3 || rt.v4? false : rt.v2;
+    rt.v3 = rt.v2 || rt.v4 ? false : rt.v3;
 
     /**
     * Configure threads on system runtime level

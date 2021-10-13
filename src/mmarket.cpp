@@ -74,7 +74,7 @@ void mmarket_import(Runtime rt, char* filename, CSCMatrix* mx, bool transpose, b
 
     // Add padding on matrices, to make
     // the CSC Blocking possible.
-    int sizeDivisor = rt.v3? V3_DIVISOR : V2_DIVISOR;
+    int sizeDivisor = rt.v3 || rt.v4? V3_DIVISOR : V2_DIVISOR;
     M = M % sizeDivisor == 0?
         M : M + sizeDivisor - M % sizeDivisor;
     N = N % sizeDivisor == 0?

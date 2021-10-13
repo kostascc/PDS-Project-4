@@ -20,6 +20,15 @@ Noodle::Noodle(){
 }
 
 
+Noodle::~Noodle() { 
+    delete cscb;
+    // if(cscb!=NULL){
+    //     free(cscb);
+    //     cscb = NULL;
+    // }
+}
+
+
 void Noodle::LoadNoodleFromCSC(CSCMatrix* csc, int col){
 
     cols = NOODLE_BLOCK_COLS <= 0? csc->W : NOODLE_BLOCK_COLS;

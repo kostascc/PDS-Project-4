@@ -24,6 +24,7 @@ class Runtime {
     bool v1;        // Run V1
     bool v2;        // Run V2
     bool v3;        // Run V3
+    bool v4;        // Run V4
     bool opt_csr_a; // Optimization: Use CSR for Matrix A
     bool opt_csr_b; // Optimization: Use CSR for Matrix B
     bool opt_csr_f; // Optimization: Use CSR for Matrix F
@@ -35,6 +36,9 @@ class Runtime {
 
   Runtime(){
     v1 = false;
+    v2 = false;
+    v3 = false;
+    v4 = false;
     opt_csr_a = false;
     threads = 1;
   }

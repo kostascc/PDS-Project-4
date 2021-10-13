@@ -27,17 +27,17 @@ MPIUtil::MPIUtil(){
     prevNode =  nodeIdx == 0 ? 
                 clusterSize - 1 : nodeIdx - 1;
     
-    #if DBG_MPI_INIT == true
+    #ifdef DBG_MPI_INIT
         printf("[Info] MPI node:%d, cluster: %d, master: %d, prev: %d, next: %d\n", 
             nodeIdx, clusterSize, MPI_MASTER_NODE_IDX, prevNode, nextNode);
     #endif
 }
 
 
-void MPIUtil::Send_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request request[])
+void MPIUtil::Send_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request* request)
 {
 
-    #if DBG_MPI_COMM == true
+    #ifdef DBG_MPI_COMM
         printf("[Info] MPI Node %d Sending to %d (length: %d, tag: %d)\n", nodeIdx, partner, length, tag);
     #endif
 
@@ -48,16 +48,16 @@ void MPIUtil::Send_t(int tag, void* buffer, int length, int partner, MPI_Datatyp
         partner,   // Destination
         tag,    // Tag
         MPI_COMM_WORLD,   // Comm
-        &(request[1])   // *Request
+        request   // *Request
     );
     
 }
 
 
-void MPIUtil::Receive_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request request[])
+void MPIUtil::Receive_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request* request)
 {
 
-    #if DBG_MPI_COMM == true
+    #ifdef DBG_MPI_COMM 
         printf("[Info] MPI Node %d receiving from %d (length: %d, tag: %d)\n", nodeIdx, partner, length, tag);
     #endif
 
@@ -68,13 +68,13 @@ void MPIUtil::Receive_t(int tag, void* buffer, int length, int partner, MPI_Data
         partner,   // Destination
         tag,    // Tag
         MPI_COMM_WORLD,   // Comm
-        &(request[0])   // *Request
+        request   // *Request
     );
 
 }
 
 
-void MPIUtil::Send(int tag, int* buffer, int length, int partner, MPI_Request request[])
+void MPIUtil::Send(int tag, int* buffer, int length, int partner, MPI_Request* request)
 {
 
     Send_t(tag, buffer, length, partner, MPI_INT, request);
@@ -82,7 +82,7 @@ void MPIUtil::Send(int tag, int* buffer, int length, int partner, MPI_Request re
 }
 
 
-void MPIUtil::Receive(int tag, int* buffer, int length, int partner, MPI_Request request[])
+void MPIUtil::Receive(int tag, int* buffer, int length, int partner, MPI_Request* request)
 {
 
     Receive_t(tag, buffer, length, partner, MPI_INT, request);
@@ -90,20 +90,21 @@ void MPIUtil::Receive(int tag, int* buffer, int length, int partner, MPI_Request
 }
 
 
-void MPIUtil::SendWait(MPI_Request request[])
+void MPIUtil::SendWait(MPI_Request* request)
 {
 
     MPI_Status status;
-    MPI_Wait(&(request[1]), &status);
+    //MPI_Wait(&request[MPI_SEND_], &status);
+    MPI_Wait(request, &status);
     
 }
 
 
-void MPIUtil::ReceiveWait(MPI_Request request[])
+void MPIUtil::ReceiveWait(MPI_Request* request)
 {
 
     MPI_Status status;
-    MPI_Wait(&(request[0]), &status);
+    MPI_Wait(request, &status);
 
 }
 
@@ -130,7 +131,7 @@ void MPIUtil::AbortMsg(char* msg)
 
 void MPIUtil::FinishLocal()
 {
-    #if DBG_MPI_INIT == true
+    #ifdef DBG_MPI_INIT
         printf("[Info] MPI node %d finished\n", nodeIdx);
     #endif
 
@@ -141,7 +142,7 @@ void MPIUtil::FinishLocal()
 
 void MPIUtil::Finalize()
 {
-    #if DBG_MPI_INIT == true
+    #ifdef DBG_MPI_INIT 
         printf("[Info] MPI node %d finalized\n", nodeIdx);
     #endif
 

@@ -14,8 +14,8 @@
 void V1::Execute(Runtime rt){
 
     // Matrices A and F required to be in CSR format
-    if(!rt.opt_csr_a /*|| !rt.opt_csr_f*/){
-        printf("[Error] Flag '--opt-csr-a' is required for V1.\n");
+    if(!rt.opt_csr_a || rt.opt_csr_b || !rt.opt_csr_f){
+        printf("[Error] Flags '--opt-csr-a' and '--opt-csr-f' are required for V1.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -28,7 +28,6 @@ void V1::Execute(Runtime rt){
     COOMatrix C = COOMatrix();
     COOMatrix coo = COOMatrix();
 
-    
     #pragma omp parallel for \
     private(coo) shared(C)
     // For Each Column of Matrix B
@@ -70,21 +69,12 @@ void V1::Execute(Runtime rt){
 
     }
 
+
     // Stop Timer
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);
     printf("[Info] V1 took %f s\n", delta_us);
 
-    // TODO: Was Removed when porting to linux. Must fix
-    // std::sort(coo.begin(), coo.end(), [](auto &left, auto &right) {
-    //     if(left.second == right.second)
-    //         return left.first  < right.first ;
-    //         return left.second < right.second;
-    // });
-
-    // exportCOOVectorP(&coo, rt, "v1");
-
-    printf("[Info] NNZ: %d\n", C.nnz);
 
 }
 

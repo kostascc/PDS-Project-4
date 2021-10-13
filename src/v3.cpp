@@ -25,9 +25,9 @@ using namespace std;
 void V3::Execute(Runtime rt){   
 
     // Matrix B required to be in CSR format
-    if(!rt.opt_csr_b){
-        printf("[Error] Flags '--opt-csr-b' is required for V3.\n");
-        // exit(EXIT_FAILURE);
+    if(!rt.opt_csr_b || rt.opt_csr_a || rt.opt_csr_f){
+        printf("[Error] Flag '--opt-csr-b' is required for V3.\n");
+        exit(EXIT_FAILURE);
     }
 
     // Start Timer
@@ -35,9 +35,6 @@ void V3::Execute(Runtime rt){
     srand((unsigned) time(&tim));
     struct timespec start, end;
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-
-//     // Initialize MPI
-//     // MPIUtil mpi = MPIUtil();
 
     CSCMatrix* A = rt.A;    // Matrix A
     CSCMatrix* B = rt.B;    // Matrix B
@@ -62,56 +59,15 @@ void V3::Execute(Runtime rt){
     Noodle noodleF = Noodle();
     noodleF.LoadNoodleFromCSC(F, 0);
 
-    
-//     rt.threads = 1;
-
-//     // All possible 3x3 blocks, and every
-//     // multiplication between them.
-//     Block9Permutations permute = Block9Permutations();
-//     permute.Permutate(rt.threads);
-
-//     // printf("[Info] Permutations Took %s\n", clock.stopClock());
-
-
-//     uint64_t blocksAvoided = 0;     // Count of blocks that were skipped
-//     uint64_t blocksCalculated = 0;  // Count of blocks that were calculated
-
-//     vector<Block> tblock;
-//     vector<COOMatrix> tcoo;
-//     tblock.reserve(rt.threads+1);
-//     tcoo.reserve(rt.threads+1);
-//     for(int i=0; i<rt.threads+1; i++){
-//         tblock.emplace_back(Block9());
-//         tcoo.emplace_back(COOMatrix());
-//     }
-
     Block64 block;
     COOMatrix coo;
 
-    // for(int i=0; i<1000000; i++)
-    //     i += (int)(i%2);
-
-    // return;
-
-//     // For each block in the initial Matrix
-
+    // For each block in the initial Matrix
     #pragma omp parallel for \
     shared(noodleA,noodleB,noodleF,C) \
-    private(block,coo) /*num_threads(rt.threads)*/
+    private(block,coo) 
     for(int i=0; i<A->H; i+=BLOCK_HEIGHT){      // For each block-starting line
     
-//         //int t = omp_get_thread_num();
-
-//         // if(t > rt.threads)
-//         //     printf("Thread Id out of bounds\n");
-
-//         // if(t>omp_get_thread_num())
-//         //     printf("Thread count out of bounds\n");
-//         // if(tmpp==0){
-//         //     tmpp++;
-//         //     #pragma omp critical
-//         //         printf("\nthread: %d\n", t);
-//         // }
         coo.Reset();
         
         for(int j=0; j<A->W; j+=BLOCK_WIDTH){   // For each block-starting column
@@ -121,10 +77,10 @@ void V3::Execute(Runtime rt){
             block.Reset();
 
             // Initiate the block using the filter
-            uint64_t tmpFilter = CSCBlocking64::GetFilterBlockValue(&noodleF, i, j);
-            block.BlockOR( tmpFilter );
-            
-            
+            // uint64_t tmpFilter = CSCBlocking64::GetBlockValue(&noodleF, i, j);
+            //tmpFilter = (uint64_t)0xFFFFFFFFFFFFFFFF;
+            //block.BlockOR( (uint64_t)tmpFilter );
+
             // For each intermediate block other than the middle one
             for(int k=0; k<A->H; k+=BLOCK_HEIGHT){
                 
@@ -138,16 +94,17 @@ void V3::Execute(Runtime rt){
                 // current intermediate block multiplication
                 block.BlockOR( 
                     CSCBlocking64::MultiplyBlocks(
-                        CSCBlocking64::GetBlockValue(&noodleA, k, j),
+                        CSCBlocking64::GetBlockValue(&noodleA, i, k),
                         CSCBlocking64::GetBlockValue(&noodleB, j, k),
-                        tmpFilter
+                        (uint64_t)0 /*tmpFilter ^*/ /*0xFFFFFFFFFFFFFFFF*/
                     )
                 );
 
             }
 
+            //block.value &= (tmpFilter /*^ 0xFFFFFFFFFFFFFFFF*/);
             // Block value has been calculated
-            //block.CleanFilter( tmpFilter ^ 0xFFFFFFFFFFFFFFFF );
+            // block.CleanFilter( tmpFilter );
 
             // Add block to COO values
             CSCBlocking64::AddCOOfromBlockValue(&coo, block.value, i, j);
@@ -166,10 +123,6 @@ void V3::Execute(Runtime rt){
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     float delta_us = (float) ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000)/ (1000000);
     printf("[Info] V3 took %f s\n", delta_us);
-
-    printf("[Info] NNZ: %d\n", C->nnz);
-
-//     printf("[Info] Blocks Calculated: %d, Blocks Avoided: %d\n", blocksCalculated, blocksAvoided);
 
 }
 

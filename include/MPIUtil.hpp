@@ -17,16 +17,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include "AUXParameters.hpp"
 
 
 /**********************************************
  *            Debugging Options
  **********************************************/
-#define DBG_MPI_INIT true
-#define DBG_MPI_COMM true
+#ifdef DEBUGGING_CHECKS
+    #define DBG_MPI_INIT 
+    #define DBG_MPI_COMM 
+#endif
 /**********************************************/
 
 #define MPI_MASTER_NODE_IDX 0
+
+#define MPI_RECEIVE_ 0
+#define MPI_SEND_ 1
+
 
 using namespace std;
 
@@ -135,7 +142,7 @@ class MPIUtil {
          * @param type 
          * @param request 
          */
-        void Send_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request request[]);
+        void Send_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request* request);
 
         /**
          * Non-Blocking Receive with DataType.
@@ -147,7 +154,7 @@ class MPIUtil {
          * @param type 
          * @param request 
          */
-        void Receive_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request request[]);
+        void Receive_t(int tag, void* buffer, int length, int partner, MPI_Datatype type, MPI_Request* request);
 
         /**
          * Non-Blocking Send,
@@ -159,7 +166,7 @@ class MPIUtil {
          * @param partner 
          * @param request 
          */
-        void Send(int tag, int* buffer, int length, int partner, MPI_Request request[]);
+        void Send(int tag, int* buffer, int length, int partner, MPI_Request* request);
 
         /**
          * Non-Blocking Receive,
@@ -171,14 +178,14 @@ class MPIUtil {
          * @param partner 
          * @param request 
          */
-        void Receive(int tag, int* buffer, int length, int partner, MPI_Request request[]);
+        void Receive(int tag, int* buffer, int length, int partner, MPI_Request* request);
 
         /**
          * Blocks until send has finished.
          * 
          * @param request 
          */
-        void SendWait(MPI_Request request[]);
+        void SendWait(MPI_Request* request);
 
 
         /**
@@ -186,7 +193,7 @@ class MPIUtil {
          * 
          * @param request 
          */
-        void ReceiveWait(MPI_Request request[]);
+        void ReceiveWait(MPI_Request* request);
 
         // /**
         //  * Blocking Send,

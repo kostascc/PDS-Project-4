@@ -34,4 +34,18 @@ entries = nnz(A);
 
 flipped
 
-AAAnnz = nnz((A.* (A* A))>0)
+AAnnz = nnz((A* A)>0)
+
+ATAnnz = nnz((A' * A)>0)
+
+AATnnz = nnz((A * A')>0)
+
+ATATnnz = nnz((A' * A')>0)
+
+AAAnnz = nnz((A.*(A* A))>0)
+
+AATAnnz = nnz((A.*(A' * A))>0)
+
+AAATnnz = nnz((A.*(A * A'))>0)
+
+ATAAnnz = nnz((A.*(A* A))>0)

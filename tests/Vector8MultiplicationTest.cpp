@@ -15,7 +15,6 @@
 #include "v1.hpp"
 #include "v2.hpp"
 #include "v3.hpp"
-#include "v4.hpp"
 #include "Block9Permutations.hpp"
 #include "CSCBlocking9.hpp"
 #include "COOMatrix.hpp"
@@ -30,20 +29,13 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-    Runtime rt = startup(argc, argv);
+    uint64_t a = 0xF43723F41F08B39E;
+    uint64_t b = 0xFF1502FD9B4CE3CE;
+    uint64_t f = 0;
 
-    if(rt.v1)
-        V1::Execute(rt);
+    uint64_t c = CSCBlocking64::MultiplyBlocks(a, b, f);
 
-    if(rt.v2)
-        V2::Execute(rt);
-
-    if(rt.v3)
-        V3::Execute(rt);
-
-    if(rt.v4)
-        V4::Execute(rt);
-
+    printf("mult: %lx\n", c);
     return 0;
 
 }
