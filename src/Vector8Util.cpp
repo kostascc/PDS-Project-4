@@ -21,7 +21,7 @@ uint64_t Vector8Util::Mult(uint8_t a, uint8_t b){
 }
 
 
-const uint64_t Vector8Util::magic [1<<8] = 
+const uint64_t Vector8Util::magic [] = 
 { 
                 0x0000000000000000,
                 0x0000000000000001,

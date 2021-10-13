@@ -25,9 +25,9 @@ using namespace std;
 void V2::Execute(Runtime rt){   
 
     // Matrices A and F required to be in CSR format
-    if(!rt.opt_csr_a || !rt.opt_csr_f){
+    if(!rt.opt_csr_a || rt.opt_csr_b || !rt.opt_csr_f){
         printf("[Error] Flags '--opt-csr-a' and '--opt-csr-f' are required for V2.\n");
-        exit(EXIT_FAILURE);
+        // exit(EXIT_FAILURE);
     }
 
     // Start Timer
@@ -50,51 +50,28 @@ void V2::Execute(Runtime rt){
         exit(EXIT_FAILURE);
     }
 
-    rt.threads = 1;
-
     // All possible 3x3 blocks, and every
     // multiplication between them.
     Block9Permutations permute = Block9Permutations();
     permute.Permutate(rt.threads);
-
-    // printf("[Info] Permutations Took %s\n", clock.stopClock());
 
     // Block block = Block9();
 
     // uint64_t blocksAvoided = 0;     // Count of blocks that were skipped
     // uint64_t blocksCalculated = 0;  // Count of blocks that were calculated
 
-    // vector<Block9> tblock;
-    // vector<COOMatrix> tcoo;
-    // tblock.reserve(rt.threads+1);
-    // tcoo.reserve(rt.threads+1);
-    // for(int i=0; i<rt.threads+1; i++){
-    //     tblock.emplace_back(Block9());
-    //     tcoo.emplace_back(COOMatrix());
-    // }
-
     Block9 block;
     COOMatrix coo;
+
+    int tmpnnz = 0;
 
     // For each block in the initial Matrix
 
     #pragma omp parallel for \
-    shared(A,B,F,C) \
-    private(block,coo) /*num_threads(rt.threads)*/
+    shared(A,B,F,C,tmpnnz) \
+    private(block,coo)
     for(int i=0; i<A->H; i+=BLOCK_HEIGHT){      // For each block-starting line
         
-        //int t = omp_get_thread_num();
-
-        // if(t > rt.threads)
-        //     printf("Thread Id out of bounds\n");
-
-        // if(t>omp_get_thread_num())
-        //     printf("Thread count out of bounds\n");
-        // if(tmpp==0){
-        //     tmpp++;
-        //     #pragma omp critical
-        //         printf("\nthread: %d\n", t);
-        // }
         coo.Reset();
         
         for(int j=0; j<A->W; j+=BLOCK_WIDTH){   // For each block-starting column
@@ -102,11 +79,11 @@ void V2::Execute(Runtime rt){
             // Block with starting point at i, j
             block.UpdateBlockPosition(i, j);
             block.Reset();
+            block.value = 0;
 
-            
+            // int tmpFilter = CSCBlocking9::GetBlockValue(F, i, j);
             // Initiate the block using the filter
-            block.BlockOR( CSCBlocking9::GetFilterBlockValue(F, i, j) );
-            
+            // block.BlockOR( tmpFilter ^ 0x1FF );
             
             // For each intermediate block other than the middle one
             for(int k=0; k<A->H; k+=BLOCK_HEIGHT){
@@ -128,8 +105,10 @@ void V2::Execute(Runtime rt){
 
             }
 
+
             // Block value has been calculated
-            block.CleanFilter( CSCBlocking9::GetBlockValue(F, i, j) );
+            // block.value &= tmpFilter;
+            // block.CleanFilter( tmpFilter ^ 0x1FF );
 
             // Add block to COO values
             CSCBlocking9::AddCOOfromBlockValue(&coo, block.value, i, j);
@@ -150,8 +129,6 @@ void V2::Execute(Runtime rt){
     printf("[Info] V2 took %f s\n", delta_us);
 
     printf("[Info] NNZ: %d\n", C->nnz);
-
-    // printf("[Info] Blocks Calculated: %d, Blocks Avoided: %d\n", blocksCalculated, blocksAvoided);
 
 }
 

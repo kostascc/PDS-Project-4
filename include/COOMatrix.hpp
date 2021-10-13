@@ -16,6 +16,7 @@
 #include <math.h>
 #include <algorithm>
 
+
 #define MPI_COO_ADDPOINT 0xC00A
 
 #define COO_DEFAULT_RESERVE_SIZE 1<<19
@@ -30,6 +31,10 @@ class COOMatrix {
     COOMatrix(){
         coo.reserve(COO_DEFAULT_RESERVE_SIZE);
         nnz = 0;
+    }
+
+    ~COOMatrix(){
+        coo.clear();
     }
 
     /**

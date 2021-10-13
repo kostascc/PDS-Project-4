@@ -92,6 +92,8 @@ class Noodle {
          **/
         Noodle();
 
+        ~Noodle();
+
         /**
          * Loads 8 full columns of the CSC Matrix,
          * devided into blocks of length 8.  

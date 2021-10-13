@@ -23,7 +23,7 @@ void Block64::UpdateBlockPosition(int linBegin, int colBegin){
 }
 
 void Block64::BlockOR(uint64_t nextValue){
-    this->value |= nextValue;
+    this->value |= (uint64_t)nextValue;
 }
 
 bool Block64::isAllOnes(){
@@ -34,10 +34,9 @@ void Block64::CleanFilter(uint64_t filter){
     // Ones in the positions where a
     // calculation is required.
     // Zeroes in places to be cleaned.
-    this->value &= filter;
+    this->value &= (uint64_t)filter;
 }
 
 void Block64::Reset(){
     this->value = (uint64_t)0;
 }
- 

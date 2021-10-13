@@ -84,7 +84,7 @@ uint8_t Vector8::GetVectorFromNoodle(Noodle* noodle, int colIdx, int blockIdx){
         #ifdef VECTOR8_CHECK_CSCI_CONTEXT
             if( c <  VECTOR8_BLOCKS_PER_NOODLE_BLOCK * VECTOR8_BLOCK_LENGTH * noodleBlockIdx ||
                 c >= VECTOR8_BLOCKS_PER_NOODLE_BLOCK * VECTOR8_BLOCK_LENGTH * (noodleBlockIdx+1) ){
-                printf("[Error] Noodle Block context out of bounds (LoadVectorFromNoodle): %d", c - blockIdx*VECTOR8_BLOCK_LENGTH);
+                printf("[Error] Noodle Block context out of bounds (LoadVectorFromNoodle): %d\n", c - blockIdx*VECTOR8_BLOCK_LENGTH);
                 exit(EXIT_FAILURE);
             }
             
@@ -97,7 +97,7 @@ uint8_t Vector8::GetVectorFromNoodle(Noodle* noodle, int colIdx, int blockIdx){
         #ifdef VECTOR8_CHECK_CSCI_CONTEXT
             if( c - blockIdx*VECTOR8_BLOCK_LENGTH > VECTOR8_BLOCK_LENGTH-1 || 
                 c - blockIdx*VECTOR8_BLOCK_LENGTH < 0){
-                printf("[Error] Block context out of bounds (LoadVectorFromNoodle): %d", c - blockIdx*VECTOR8_BLOCK_LENGTH);
+                printf("[Error] Block context out of bounds (LoadVectorFromNoodle): %d\n", c - blockIdx*VECTOR8_BLOCK_LENGTH);
                 exit(EXIT_FAILURE);
             }
         #endif
